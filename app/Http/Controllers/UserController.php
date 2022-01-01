@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -16,7 +17,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users', compact('users'));
+        //return view('users', compact('users'));
+        return Inertia::render('Usuarios',['users' => $users]);
+
     }
 
     /**
@@ -59,7 +62,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        
+        return Inertia::render('EditUser',['user' => $user]);
     }
 
     /**
