@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $users = User::all();
         //return view('users', compact('users'));
-        return Inertia::render('Usuarios',['users' => $users]);
+        return Inertia::render('Users',['users' => $users]);
 
     }
 
