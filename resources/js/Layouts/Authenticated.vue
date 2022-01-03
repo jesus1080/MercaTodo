@@ -19,6 +19,11 @@
                                     Dashboard
                                 </BreezeNavLink>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
+                                    Usuarios
+                                </BreezeNavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -65,6 +70,7 @@
                             Dashboard
                         </BreezeResponsiveNavLink>
                     </div>
+                    
 
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
