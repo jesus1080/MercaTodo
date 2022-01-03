@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -17,7 +17,6 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        //return view('users', compact('users'));
         return Inertia::render('Users',['users' => $users]);
 
     }
@@ -57,26 +56,30 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::findOrFail($id);
+        #$user = User::findOrFail($id);
         
-        return Inertia::render('EditUser',['user' => $user]);
+        #return Inertia::render('EditUser',['user' => $user]);
+        return Inertia::render('EditUser',['user'=>$user]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        //dd($user);
+        //dd($request);
+        $user->update($request->all());
+        return Redirect::route('users.index');
     }
 
     /**

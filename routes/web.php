@@ -29,11 +29,13 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth', 'verified'])->get('/users', [UserController::class, 'index'])->name('users');
+Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
+
+#Route::middleware(['auth', 'verified'])->get('/users', [UserController::class, 'index'])->name('users');
 #Route::middleware(['auth', 'verified'])->get('/users/{id}', [UserController::class, 'edit'])->name('');
-Route::get('/users/edit/{id}', [UserController::class, 'edit'])
-                ->middleware('auth')
-                ->name('users.edit');
+#Route::get('/users/edit/{id}', [UserController::class, 'edit'])
+                #->middleware('auth')
+                #->name('users.edit');
 
 #Route::resource('users', UserController::class)->name('users.index');
 #Route::get('/users', [UserController::class, 'index'])->name('users.index');

@@ -19,16 +19,9 @@
                                     Dashboard
                                 </BreezeNavLink>
                             </div>
-                            <!--
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('users.index')" >
+                                <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Usuarios
-                                </BreezeNavLink>
-                            </div>
-                            -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('users')" :active="route().current('users')">
-                                    UsuariosVue
                                 </BreezeNavLink>
                             </div>
                         </div>
