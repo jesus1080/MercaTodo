@@ -12,14 +12,14 @@ class IndexTest extends TestCase
 {
     use RefreshDatabase;
     /** @test */
-    public function aUserNotAutenticateNotCanListClients(){
+    public function aUserNotAutenticateCanNotListClients(){
         $response = $this->get(route('users.index'));
         $response->assertRedirect(route('login'));
         $response->assertStatus(302);
 
     }
     /** @test */
-    public function testAUserClientAuthNotCanListUsers(){
+    public function testAUserClientAuthCanNotListUsers(){
         Role::create(['name' => 'client']);
         $user = User::factory()->create()->assignRole('client');
         $this->actingAs($user);
