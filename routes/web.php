@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,5 +35,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
 });
 require __DIR__.'/auth.php';
+
+Route::resource('products', ProductController::class);
 
 
