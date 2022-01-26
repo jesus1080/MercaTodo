@@ -17,8 +17,8 @@ class ProductController extends Controller
      */
     public function index():Response
     {
-        $products = Product::all();
-        return Inertia::render('Dashboard',['products' => $products]);
+        $products = Product::paginate(4);
+        return Inertia::render('Products',['products' => $products]);
 
     }
 
