@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,6 +19,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -26,16 +28,24 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     //$products = Product::paginate(5);
+//     $products = Product::where("status","=",true)->paginate(5);
+//     return Inertia::render('Dashboard',compact('products'));
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/products2', [ProductController::class, 'show'])->name('products.show')->middleware((['auth','verified']));
 
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
+    Route::resource('products', ProductController::class,[
+        'except' => ['show']])->middleware(['auth', 'verified']);
 });
 require __DIR__.'/auth.php';
 
-Route::resource('products', ProductController::class);
+
+
+
 
 

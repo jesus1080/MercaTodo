@@ -114,10 +114,7 @@ export default {
             })
         }
     },
-
-   
-   
-
+    
     methods: {
         submit() {
             this.form.put(this.route('users.update', this.$props.user.id), 

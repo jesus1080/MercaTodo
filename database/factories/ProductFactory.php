@@ -16,11 +16,11 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->title(),
             'price' => $this->faker->randomNumber(5),
-            'image' => '/img/aaaaa.jpg',
+            'image' => $this->faker->image('public/storage/products_images',400,300),
             'description' => $this->faker->text(200),
             'stock' => $this->faker->randomNumber(5),
-            'color' => $this->faker->colorName(),
-            'size' => $this->faker->word(),
+            'status' => true,
+            
         ];
     }
 }
