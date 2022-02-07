@@ -111,7 +111,7 @@ class ProductController extends Controller
     {
        
         //dd($request->parameters->name);
-        dd( $request->input('name'));
+        //dd( $request->input('name'));
         
         $product->update([
 
