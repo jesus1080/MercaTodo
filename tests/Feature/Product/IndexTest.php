@@ -14,7 +14,7 @@ class IndexTest extends TestCase
    
         
     /** @test */
-    public function aUserAutenticateCanListProducts(){
+    public function aUserAutenticateCanListProducts(): void{
             
             $this->withoutExceptionHandling();
             $products = Product::factory(10)->create();
@@ -27,7 +27,6 @@ class IndexTest extends TestCase
               ->has('data', 4)
               ->etc()
               )
-              
             );
             $response->assertStatus(200);
     }
