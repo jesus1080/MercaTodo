@@ -11,6 +11,7 @@ use Inertia\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
 {
@@ -48,12 +49,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|between:0,9999999',
-            
             'description' => 'required|string|max:255',
             'stock' => 'required|between:0,9999999',
         ]);
@@ -82,7 +82,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(Request $request):Response
     {
         //$products = Product::where("status","=",true)->paginate(5);
         $products = Product::name($request->input('name'))->where("status","=",true)->paginate(3);
@@ -95,7 +95,7 @@ class ProductController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product): Response
     {
         return Inertia::render('EditProduct',['product'=>$product]);
     }
@@ -107,7 +107,7 @@ class ProductController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product): RedirectResponse
     {
        
         //dd($request->parameters->name);
@@ -116,7 +116,6 @@ class ProductController extends Controller
         $product->update([
 
             'name' => $request['form']['name'],
-           
             'stock' => $request['form']['stock'],
             'price' => $request['form']['price'],
             'description' => $request['form']['description'],
