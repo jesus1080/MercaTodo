@@ -56,6 +56,7 @@ class ProductController extends Controller
             'price' => 'required|between:0,9999999',
             'description' => 'required|string|max:255',
             'stock' => 'required|between:0,9999999',
+            'image' => 'image|max:1200|required',
         ]);
         //dd($request);
         $image = $request->image;
@@ -111,22 +112,35 @@ class ProductController extends Controller
     {
        
         //dd($request->parameters->name);
-        //dd( $request->input('name'));
+        //dd( $request);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|between:0,9999999',
+            'description' => 'required|string|max:255',
+            'stock' => 'required|between:0,9999999',
+            'image' => 'image|max:1200|nullable',
+        ]);
         
         $product->update([
 
-            'name' => $request['form']['name'],
-            'stock' => $request['form']['stock'],
-            'price' => $request['form']['price'],
-            'description' => $request['form']['description'],
-            'status' => $request['form']['status'],
+            // 'name' => $request['form']['name'],
+            // 'stock' => $request['form']['stock'],
+            // 'price' => $request['form']['price'],
+            // 'description' => $request['form']['description'],
+            // 'status' => $request['form']['status'],
+
+            'name' => $request->name,
+            'stock' => $request->stock,
+            'price' => $request->price,
+            'description' => $request->description,
+            'status' => $request->status,
 
         ]);
 
-        if($request->hasFile('form')){
+        if($request->hasFile('image')){
             //dd($product->getImageName());
             Storage::delete('public/products_images/'.$product->getImageName());
-            $image = $request['form']['image'];  
+            $image = $request->image;  
             $imageName = (string)Str::uuid().'.'.$image->getClientOriginalExtension();
             $image->storeAS('public/products_images',$imageName);
             $product->update([

@@ -20036,12 +20036,48 @@ __webpack_require__.r(__webpack_exports__);
     BreezeAuthenticatedLayout: _Layouts_Authenticated_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     BreezeValidationErrors: _Components_ValidationErrors_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     Head: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_5__.Head,
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_5__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_5__.Link,
+    useForm: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_5__.useForm
   },
   props: ['product'],
+  // data() {
+  //     return {
+  //         form: this.$inertia.form({
+  //             name: this.$props.product.name,
+  //             price: this.$props.product.price,
+  //             stock: this.$props.product.stock,
+  //             description: this.$props.product.description,
+  //             status: this.$props.product.status!=0 ? true:false,
+  //             image: null,
+  //             terms: false,
+  //         })
+  //     }
+  // },
+  // methods: {
+  //     submit(){
+  //        this.$inertia.post(this.route('products.update', this.$props.product),{
+  //             _method: 'put',
+  //             image: this.$props.product.image,
+  //             form: this.form,
+  //         })
+  //     }
+  // }
+  // setup (){
+  //     const form = useForm({
+  //             name: this.$props.product.name,
+  //             price: this.$props.product.price,
+  //             stock: this.$props.product.stock,
+  //             description: this.$props.product.description,
+  //             status: this.$props.product.status!=0 ? true:false,
+  //             image: null,
+  //             terms: false,
+  //         })
+  //         return {form}
+  // },
   data: function data() {
     return {
-      form: this.$inertia.form({
+      form: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_5__.useForm)({
+        _method: 'put',
         name: this.$props.product.name,
         price: this.$props.product.price,
         stock: this.$props.product.stock,
@@ -20054,10 +20090,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      this.$inertia.post(this.route('products.update', this.$props.product), {
-        _method: 'put',
-        image: this.$props.product.image,
-        form: this.form
+      console.log("cualquier cosa");
+      this.form.post(this.route('products.update', this.$props.product), {
+        image: this.$props.product.image
       });
     }
   }
@@ -22392,6 +22427,14 @@ var _hoisted_31 = {
   type: "hidden"
 };
 var _hoisted_32 = ["src"];
+
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150",
+  type: "submit"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(":class=\"{'opacity-25': form.processing}\""), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("> Editar ")], -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
 
@@ -22475,14 +22518,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "img-responsive object-cover h-20 w-20 ..."
       }, null, 8
       /* PROPS */
-      , _hoisted_32)])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150", {
-          'opacity-25': $data.form.processing
-        }]),
-        type: "submit"
-      }, " Editar ", 2
-      /* CLASS */
-      )], 32
+      , _hoisted_32)])])])])]), _hoisted_33], 32
       /* HYDRATE_EVENTS */
       )])])])])];
     }),
