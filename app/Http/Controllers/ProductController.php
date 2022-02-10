@@ -85,7 +85,7 @@ class ProductController extends Controller
     public function show(Request $request)
     {
         //$products = Product::where("status","=",true)->paginate(5);
-        $products = Product::name($request->input('name'))->where("status","=",true)->paginate(3);
+        $products = Product::name($request->input('name'))->where("status","=",true)->paginate(5);
         return Inertia::render('ProductsShow',compact('products'));
     }
 
