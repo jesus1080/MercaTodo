@@ -94,7 +94,7 @@
                  </div>
                 </div>
                 </div>
-                <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="submit" :class="{'opacity-25': form.processing}">
+                <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="submit"> <!--:class="{'opacity-25': form.processing}"-->>
                     Editar
                 </button>
             </form>
@@ -125,11 +125,49 @@ export default {
         BreezeValidationErrors,
         Head,
         Link,
+        useForm,
     },
     props:['product'],
-    data() {
-        return {
-            form: this.$inertia.form({
+    // data() {
+    //     return {
+    //         form: this.$inertia.form({
+    //             name: this.$props.product.name,
+    //             price: this.$props.product.price,
+    //             stock: this.$props.product.stock,
+    //             description: this.$props.product.description,
+    //             status: this.$props.product.status!=0 ? true:false,
+    //             image: null,
+    //             terms: false,
+    //         })
+    //     }
+    // },
+
+
+    // methods: {
+    //     submit(){
+    //        this.$inertia.post(this.route('products.update', this.$props.product),{
+    //             _method: 'put',
+    //             image: this.$props.product.image,
+    //             form: this.form,
+    //         })
+    //     }
+    // }
+    // setup (){
+    //     const form = useForm({
+    //             name: this.$props.product.name,
+    //             price: this.$props.product.price,
+    //             stock: this.$props.product.stock,
+    //             description: this.$props.product.description,
+    //             status: this.$props.product.status!=0 ? true:false,
+    //             image: null,
+    //             terms: false,
+    //         })
+    //         return {form}
+    // },
+    data(){
+        return{ 
+            form : useForm({
+                _method: 'put',
                 name: this.$props.product.name,
                 price: this.$props.product.price,
                 stock: this.$props.product.stock,
@@ -137,19 +175,20 @@ export default {
                 status: this.$props.product.status!=0 ? true:false,
                 image: null,
                 terms: false,
+
             })
         }
     },
 
-
     methods: {
         submit(){
-           this.$inertia.post(this.route('products.update', this.$props.product),{
-                _method: 'put',
+            console.log("cualquier cosa");
+            this.form.post(this.route('products.update', this.$props.product), {
+                
                 image: this.$props.product.image,
-                form: this.form,
             })
         }
+        
     }
 
    
