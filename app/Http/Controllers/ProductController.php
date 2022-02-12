@@ -12,15 +12,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Admin\Products\StoreProductRequest;
+use App\Http\Requests\Admin\Products\UpdateProductRequest;
 
 class ProductController extends Controller
 {
-    //
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request):Response
     {
         $products = Product::paginate(4);
@@ -33,35 +29,15 @@ class ProductController extends Controller
         
     }
   
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create():Response
     {
         return Inertia::render('CreateProduct');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreProductRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|between:0,9999999',
-            'description' => 'required|string|max:255',
-            'stock' => 'required|between:0,9999999',
-            'image' => 'image|max:1200|required',
-        ]);
-        //dd($request);
         $image = $request->image;
         $imageName = (string)Str::uuid().'.'.$image->getClientOriginalExtension();
-       
        
         $product = Product::create([
             'name' => $request->name,
@@ -70,64 +46,29 @@ class ProductController extends Controller
             'description' => $request->description,
             'stock' => $request->stock,
         ]);
-        //dd($product);
+        
         event(new Registered($product));
         $image->storeAS('public/products_images',$imageName);
         $message = "Se creo el producto correctamente";
         return redirect(route('products.index'))->with('info',$message);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Request $request):Response
     {
-        //$products = Product::where("status","=",true)->paginate(5);
         $products = Product::name($request->input('name'))->where("status","=",true)->paginate(3);
         return Inertia::render('ProductsShow',compact('products'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  User $user
-     * @return \Illuminate\Http\Response
-     */
+  
     public function edit(Product $product): Response
     {
         return Inertia::render('EditProduct',['product'=>$product]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product): RedirectResponse
-    {
-       
-        //dd($request->parameters->name);
-        //dd( $request);
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|between:0,9999999',
-            'description' => 'required|string|max:255',
-            'stock' => 'required|between:0,9999999',
-            'image' => 'image|max:1200|nullable',
-        ]);
-        
+    public function update(UpdateProductRequest $request, Product $product): RedirectResponse
+    {   
         $product->update([
-
-            // 'name' => $request['form']['name'],
-            // 'stock' => $request['form']['stock'],
-            // 'price' => $request['form']['price'],
-            // 'description' => $request['form']['description'],
-            // 'status' => $request['form']['status'],
 
             'name' => $request->name,
             'stock' => $request->stock,
@@ -137,8 +78,8 @@ class ProductController extends Controller
 
         ]);
 
-        if($request->hasFile('image')){
-            //dd($product->getImageName());
+        if($request->hasFile('image'))
+        {
             Storage::delete('public/products_images/'.$product->getImageName());
             $image = $request->image;  
             $imageName = (string)Str::uuid().'.'.$image->getClientOriginalExtension();
@@ -150,12 +91,7 @@ class ProductController extends Controller
         }
         return Redirect::route('products.index');
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
         //
