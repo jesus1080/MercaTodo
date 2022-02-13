@@ -22,4 +22,16 @@ class UpdateProductRequest extends FormRequest
             'image' => 'image|max:1200|nullable',
         ];
     }
+
+    public function messages(): array
+      {
+        return [
+        'name.required' => 'El nombre es un valor requerido',
+        'min' => 'El valor minimo para el campo :attribute debes ser :min',
+        'price.required' => 'El precio es un valor requerido',
+        'stock.required' => 'La cantidad del producto es un valor requerido',
+        'description.required' => 'La descripcion es un valor requerido',
+        'image.image' => 'La imagen debe ser de tipo jpg, png, jpeg' 
+        ];
+     }
 }
