@@ -22,16 +22,16 @@ class ProductController extends Controller
         $products = Product::paginate(4);
         if(Arr::has($request->session()->all(),'info')){
             $info = $request->session()->all()['info'];
-            return Inertia::render('Products',compact('products','info'));
+            return Inertia::render('Product/Products',compact('products','info'));
         }else{
-            return Inertia::render('Products',compact('products'));
+            return Inertia::render('Product/Products',compact('products'));
         }
         
     }
   
     public function create():Response
     {
-        return Inertia::render('CreateProduct');
+        return Inertia::render('Product/CreateProduct');
     }
 
     public function store(StoreProductRequest $request): RedirectResponse
@@ -57,13 +57,13 @@ class ProductController extends Controller
     public function show(Request $request):Response
     {
         $products = Product::name($request->input('name'))->where("status","=",true)->paginate(3);
-        return Inertia::render('ProductsShow',compact('products'));
+        return Inertia::render('Product/ProductsShow',compact('products'));
     }
 
   
     public function edit(Product $product): Response
     {
-        return Inertia::render('EditProduct',['product'=>$product]);
+        return Inertia::render('Product/EditProduct',['product'=>$product]);
     }
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
