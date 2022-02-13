@@ -7,6 +7,8 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Product;
 use Inertia\Testing\Assert;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class IndexTest extends TestCase
 {
@@ -14,17 +16,20 @@ class IndexTest extends TestCase
    
         
     /** @test */
-    public function aUserAutenticateCanListProducts(): void{
+    public function testaUserClientAutenticateCanListProducts(): void{
             
             $this->withoutExceptionHandling();
+            Role::create(['name' => 'client']);
+            $user = User::factory()->create()->assignRole('client');
+            $this->actingAs($user);
             $products = Product::factory(10)->create();
-            $response = $this->get(route('products.index'));
+            $response = $this->get(route('products.show'));
             $response->assertInertia(fn (Assert $page) => $page
-              ->component('Products')
+              ->component('Product/ProductsShow')
               ->has('products',fn (Assert $page) => $page
               ->where('total',10)
-              ->where('last_page',3)
-              ->has('data', 4)
+              ->where('last_page',4)
+              ->has('data', 3)
               ->etc()
               )
             );
