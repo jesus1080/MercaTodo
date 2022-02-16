@@ -50,7 +50,7 @@ class ProductController extends Controller
         event(new Registered($product));
         $image->storeAS('public/products_images',$imageName);
         $message = "Se creo el producto correctamente";
-        return redirect(route('products.index'))->with('info',$message);
+        return Redirect::route('products.index')->with('info',$message);
     }
 
     
