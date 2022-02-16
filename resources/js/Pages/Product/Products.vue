@@ -150,7 +150,7 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head } from '@inertiajs/inertia-vue3';
-import Pagination from '../Components/Pagination';
+import Pagination from '../../Components/Pagination';
 
 export default {
     components: {

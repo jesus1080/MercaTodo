@@ -40,7 +40,7 @@ class UpdateTest extends TestCase
         $user2 = User::factory()->create()->assignRole('client');
         $response = $this->get(route('users.edit', [$user2]));
         $response->assertInertia(fn (Assert $page) => $page
-              ->component('EditUser')
+              ->component('User/EditUser')
               ->has('user', fn(Assert $page)=> $page
                 ->where('first_name', $user2->first_name)
                 ->etc()
