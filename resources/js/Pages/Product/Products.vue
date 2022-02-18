@@ -143,7 +143,7 @@
 <!-- component -->
 
 
-         <!--endseccion products -->
+ <!--endseccion products -->
     </BreezeAuthenticatedLayout>
 </template>
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ClientController;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,13 +29,8 @@ Route::get('/', function () {
     ]);
 });
 
-// Route::get('/dashboard', function () {
-//     //$products = Product::paginate(5);
-//     $products = Product::where("status","=",true)->paginate(5);
-//     return Inertia::render('Dashboard',compact('products'));
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/products2', [ProductController::class, 'show'])->name('products.show')->middleware((['auth','verified']));
+Route::get('/productsClient', [ClientController::class, 'index'])->name('productsClient.index')->middleware((['auth','verified']));
+Route::get('/products-show/{id}', [ClientController::class, 'show'])->name('productsClient.show')->middleware((['auth','verified']));
 
 
 Route::group(['middleware' => ['role:admin']], function () {
