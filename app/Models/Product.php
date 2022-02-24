@@ -25,15 +25,15 @@ class Product extends Model
         'status',
     ];
 
-    public function getImageAttribute(){
-        
+    public function getImageAttribute(): string
+    {
         $path = explode("public/", $this->attributes['image']);
         return url('/'.$path[1]);
     }
 
-    public function getImageName(){
+    public function getImageName(): string
+    {
         $path = explode("/", $this->attributes['image']);
-        
         return $path[3];
     }
 

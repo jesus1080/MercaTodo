@@ -54,6 +54,7 @@
             </span>
                 <!-- search -->
                 <form @submit.prevent="submit">
+                     <BreezeValidationErrors class="mb-4" /> 
                      <input id="filterName" class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" type="text" placeholder="Search" v-model="form.filterName">
                 </form>
             </div>
@@ -149,11 +150,13 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Head,
+        BreezeValidationErrors,
         Pagination,
     },
     props:['products','filterName'],
