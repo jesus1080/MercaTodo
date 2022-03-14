@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Ramsey\Uuid\Type\Integer;
 
 class Product extends Model
 {
@@ -41,6 +42,14 @@ class Product extends Model
     {
         if (null !== $name) {
             return $this->searchByField($query, 'name', "%$name%", 'like');
+        }
+
+        return $query;
+    }
+    public function scopePrices(Builder $query, ? string $price): Builder
+    {
+        if (null !== $price) {
+            return $query->where('price','<',$price);
         }
 
         return $query;

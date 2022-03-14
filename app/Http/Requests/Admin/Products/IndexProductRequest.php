@@ -14,16 +14,19 @@ class IndexProductRequest extends FormRequest
 
     public function rules(): array
     {
+        //dd('hola');
         return[
 
-            'filterName' => 'string',
+            'filterName' => 'bail|nullable|min:3|max:80',
+            'filterPrice' => 'bail|nullable|min:3|max:80',
         ];
+        
     }
 
     public function messages(): array
       {
         return [
-            'filterName.string' => 'Ve',
+            'filterName.min' => 'Ve! pone minimo 3 caracteres',
            
         ];
      }

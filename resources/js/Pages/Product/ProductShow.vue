@@ -21,6 +21,7 @@
 					<h1 class="capitalize text-4xl font-extrabold">{{product.name}}</h1>
 					<h2 class="text-3xl">${{product.price}}</h2>
 					<p class="text-lg text-gray-500	">{{product.description}}</p>
+					<h2 class="text-3xl">Cantidad:{{product.stock}}</h2>
 					<div class="flex items-center gap-4 my-6 cursor-pointer ">
 						<div class="bg-blue-600 px-5 py-3 text-white rounded-lg w-2/4 text-center">Add to Car</div>
 						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" viewBox="0 0 20 20"

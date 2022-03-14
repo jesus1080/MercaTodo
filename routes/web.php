@@ -29,7 +29,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/productsClient', [ClientController::class, 'index'])->name('productsClient.index')->middleware((['auth','verified']));
+Route::get('/products-client', [ClientController::class, 'index'])->name('productsClient.index')->middleware((['auth','verified']));
 Route::get('/products-show/{id}', [ClientController::class, 'show'])->name('productsClient.show')->middleware((['auth','verified']));
 
 

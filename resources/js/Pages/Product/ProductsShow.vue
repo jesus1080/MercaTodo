@@ -47,16 +47,37 @@
                 </div>
             </div>
             <div class="relative mt-6 max-w-lg mx-auto">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
-                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </span>
+                <!-- <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                    <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
+                        <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span> -->
                 <!-- search -->
-                <form @submit.prevent="submit">
+                <form  @submit.prevent="submit">
                      <BreezeValidationErrors class="mb-4" /> 
-                     <input id="filterName" class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" type="text" placeholder="Search" v-model="form.filterName">
+                    <div class="md:flex space-x-4">
+                        <input id="filterName" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="nombre" v-model="form.filterName">
+                        <input id="filterCategory" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="categoria" >
+                        <input id="filterPrice" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="precio menor a" v-model="form.filterPrice">
+                        <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        Buscar
+                        </BreezeButton>
+                    </div>
                 </form>
+                <!-- <form @submit.prevent="submit">
+                    <div class="w-full lg:w-6/12 px-4">
+                    <BreezeValidationErrors class="mb-4" />
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlfor="grid-password">
+                            Nombre:
+                            </label>
+                            <input id="filterName" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" v-model="form.filterName" >
+                             <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Buscar
+                            </BreezeButton>
+                        </div>
+                    </div>
+                </form> -->
             </div>
         </div>
     </header>
@@ -151,6 +172,7 @@ import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
+import BreezeButton from '@/Components/Button.vue'
 
 export default {
     components: {
@@ -158,13 +180,14 @@ export default {
         Head,
         BreezeValidationErrors,
         Pagination,
+        BreezeButton,
     },
     props:['products','filterName'],
      data() {
         return {
             form: this.$inertia.form({
                filterName: this.$props.filterName,
-               
+               filterPrice: '',
             })
         }
     },
