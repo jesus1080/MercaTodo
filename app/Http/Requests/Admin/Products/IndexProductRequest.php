@@ -18,7 +18,8 @@ class IndexProductRequest extends FormRequest
         return[
 
             'filterName' => 'bail|nullable|min:3|max:80',
-            'filterPrice' => 'bail|nullable|min:3|max:80',
+            'filterPriceMin' => 'bail|nullable|min:3|max:80',
+            'filterPriceMax' => 'bail|nullable|min:3|max:80',
         ];
         
     }

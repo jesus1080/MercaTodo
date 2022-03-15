@@ -46,10 +46,18 @@ class Product extends Model
 
         return $query;
     }
-    public function scopePrices(Builder $query, ? string $price): Builder
+    public function scopePriceMin(Builder $query, ? string $price): Builder
     {
         if (null !== $price) {
             return $query->where('price','<',$price);
+        }
+
+        return $query;
+    }
+    public function scopePriceMax(Builder $query, ? string $price): Builder
+    {
+        if (null !== $price) {
+            return $query->where('price','>',$price);
         }
 
         return $query;

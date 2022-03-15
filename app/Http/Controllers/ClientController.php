@@ -12,15 +12,20 @@ class ClientController extends Controller
 {
     public function index(IndexProductRequest $request):Response
     {
-        $filterName = $request->input('filterName');
+        $filter = [
+            'filterName' => $request->input('filterName'),
+            'filterPriceMin' => $request->input('filterPriceMin'),
+            'filterPriceMax' => $request->input('filterPriceMax'),
+        ];
         $products = Product::name($request->input('filterName'))
-                                ->prices($request->input('filterPrice'))
+                                ->priceMin($request->input('filterPriceMin'))
+                                ->priceMax($request->input('filterPriceMax'))
                                 ->where("status","=",true)
-                                ->paginate(10)->appends($request->only('filterName'));
-        if($filterName===null){
+                                ->paginate(3)->appends($request->only($filter));
+        if($filter===null){
             return Inertia::render('Product/ProductsShow',compact('products'));
         }
-        return Inertia::render('Product/ProductsShow',compact('products','filterName'));
+        return Inertia::render('Product/ProductsShow',compact('products','filter'));
     }
 
     public function show(int $id): Response

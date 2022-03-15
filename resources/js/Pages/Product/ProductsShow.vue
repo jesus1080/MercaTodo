@@ -58,7 +58,8 @@
                     <div class="md:flex space-x-4">
                         <input id="filterName" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="nombre" v-model="form.filterName">
                         <input id="filterCategory" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="categoria" >
-                        <input id="filterPrice" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="precio menor a" v-model="form.filterPrice">
+                        <input id="filterPriceMin" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="precio menor a" v-model="form.filterPriceMin">
+                        <input id="filterPriceMax" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="precio mayor a" v-model="form.filterPriceMax">
                         <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         Buscar
                         </BreezeButton>
@@ -182,12 +183,13 @@ export default {
         Pagination,
         BreezeButton,
     },
-    props:['products','filterName'],
+    props:['products','filter'],
      data() {
         return {
             form: this.$inertia.form({
-               filterName: this.$props.filterName,
-               filterPrice: '',
+               filterName: this.$props.filter.filterName,
+               filterPriceMin: this.$props.filter.filterPriceMin,
+               filterPriceMax: this.$props.filter.filterPriceMax,
             })
         }
     },
