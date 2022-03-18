@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Ramsey\Uuid\Type\Integer;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model
 {
@@ -25,7 +26,10 @@ class Product extends Model
         'stock',
         'status',
     ];
-
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
     public function getImageAttribute(): string
     {
         $path = explode("public/", $this->attributes['image']);
@@ -62,7 +66,12 @@ class Product extends Model
 
         return $query;
     }
-
+    public function scopeCategory($query, $category_id)
+    {
+        if ($category_id) {
+            return $query->where('name', 'LIKE', "%$category_id%");
+        }
+    }
     private function searchByField(Builder $query, string $field, string $value, string $operator = null): Builder
     {
         return $query->where($field, $operator, $value);

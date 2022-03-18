@@ -20,6 +20,7 @@ class IndexProductRequest extends FormRequest
             'filterName' => 'bail|nullable|min:3|max:80',
             'filterPriceMin' => 'bail|nullable|min:3|max:80',
             'filterPriceMax' => 'bail|nullable|min:3|max:80',
+            'filterCategory' => 'bail|nullable|min:3|max:80',
         ];
         
     }

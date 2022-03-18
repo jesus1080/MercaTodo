@@ -56,8 +56,34 @@
                 <form  @submit.prevent="submit">
                      <BreezeValidationErrors class="mb-4" /> 
                     <div class="md:flex space-x-4">
+                        
+                        <!-- <input id="filterCategory" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="categoria" > -->
+                        <div class="flex justify-center">
+                            <div class="mb-3 xl:w-96">
+                                <select class="form-select appearance-none
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding bg-no-repeat
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="filterCategory" v-model="form.filterCategory">
+                                    <option selected>Categoria</option>
+                                    <option  v-for="(category,index) in categories" :key="index" :value='category.name'>{{category.name}}</option>
+                                        
+                               </select>
+                               
+                            </div>
+
+                        </div>
                         <input id="filterName" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="nombre" v-model="form.filterName">
-                        <input id="filterCategory" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="categoria" >
                         <input id="filterPriceMin" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="precio menor a" v-model="form.filterPriceMin">
                         <input id="filterPriceMax" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="precio mayor a" v-model="form.filterPriceMax">
                         <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
@@ -121,6 +147,7 @@
                         <a :href="route('productsClient.show', product.id)">     
                         <div class="px-5 py-3">
                             <h3 class="text-gray-700 uppercase">{{product.name}}</h3>
+                            <h3 class="text-gray-700 uppercase">{{product.category.name}}</h3>
                             <span class="text-gray-500 mt-2">${{product.price}}</span>
                         </div>
                          </a> 
@@ -183,13 +210,14 @@ export default {
         Pagination,
         BreezeButton,
     },
-    props:['products','filter'],
+    props:['products','categories','filter'],
      data() {
         return {
             form: this.$inertia.form({
                filterName: this.$props.filter.filterName,
                filterPriceMin: this.$props.filter.filterPriceMin,
                filterPriceMax: this.$props.filter.filterPriceMax,
+               filterCategory: this.$props.filter.filterCategory,
             })
         }
     },
