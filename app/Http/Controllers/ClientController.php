@@ -20,7 +20,7 @@ class ClientController extends Controller
             'filterCategory' => $request->input('filterCategory'),
         ];
         $categories = Category::all();
-        //dd($categories);
+        //dd($request->input('filterCategory'));
         $products = Product::name($request->input('filterName'))
                                 ->priceMin($request->input('filterPriceMin'))
                                 ->priceMax($request->input('filterPriceMax'))

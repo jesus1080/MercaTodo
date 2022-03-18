@@ -66,11 +66,12 @@ class Product extends Model
 
         return $query;
     }
-    public function scopeCategory($query, $category_id)
+    public function scopeCategory($query, $category_id): Builder
     {
-        if ($category_id) {
-            return $query->where('name', 'LIKE', "%$category_id%");
-        }
+         
+        //dd($category_id);
+        return $query->when($category_id, function($query) use ($category_id) { $query->where('category_id', $category_id);});
+        
     }
     private function searchByField(Builder $query, string $field, string $value, string $operator = null): Builder
     {
