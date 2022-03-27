@@ -619,6 +619,9 @@ select {
   white-space: nowrap;
   border-width: 0;
 }
+.visible {
+  visibility: visible;
+}
 .fixed {
   position: fixed;
 }
@@ -877,6 +880,12 @@ select {
 .w-2\/4 {
   width: 50%;
 }
+.w-8\/12 {
+  width: 66.666667%;
+}
+.w-4\/12 {
+  width: 33.333333%;
+}
 .min-w-full {
   min-width: 100%;
 }
@@ -1072,6 +1081,12 @@ select {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
+.rounded-tr-md {
+  border-top-right-radius: 0.375rem;
+}
+.rounded-br-md {
+  border-bottom-right-radius: 0.375rem;
+}
 .border {
   border-width: 1px;
 }
@@ -1121,6 +1136,10 @@ select {
 .border-gray-100 {
   --tw-border-opacity: 1;
   border-color: rgb(243 244 246 / var(--tw-border-opacity));
+}
+.border-gray-800 {
+  --tw-border-opacity: 1;
+  border-color: rgb(31 41 55 / var(--tw-border-opacity));
 }
 .bg-white {
   --tw-bg-opacity: 1;
@@ -1659,6 +1678,10 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(37 99 235 / var(--tw-border-opacity));
 }
+.focus\:border-gray-600:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
 .focus\:bg-gray-100:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -1678,6 +1701,10 @@ select {
 .focus\:bg-white:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.focus\:bg-gray-600:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
 }
 .focus\:text-gray-700:focus {
   --tw-text-opacity: 1;

@@ -109,6 +109,9 @@
         <div class="container mx-auto px-6">
             <h3 class="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
             <span class="mt-3 text-sm text-gray-500">200+ Products</span>
+            <div>
+                <h1>{{$page.props.message}}</h1>
+            </div>
 
       <div class=" grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6" >
             <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden" v-for="(product,index) in products.data" :key="index">
@@ -116,9 +119,15 @@
                              
                     <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                         <div class="flex items-end justify-end h-56 w-full bg-cover" :style="{backgroundImage:'url('+product.image+')' }">
-                            <button class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            </button>
+                            <!-- <form @submit.prevent="submitCard">
+                                
+                                    <input type="hidden" id="productId" :value="product.id">
+                                
+                                <button type="submit" class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                    <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                </button>
+                            </form> -->
+                            <formp :product="product"/>
                         </div>
                         <a :href="route('productsClient.show', product.id)">     
                         <div class="px-5 py-3">
@@ -173,10 +182,12 @@
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
 import BreezeButton from '@/Components/Button.vue'
+import { reactive } from 'vue'
+import Formp from '../../Components/Formp';
 
 export default {
     components: {
@@ -185,8 +196,9 @@ export default {
         BreezeValidationErrors,
         Pagination,
         BreezeButton,
+        Formp,
     },
-    props:['products','categories','filter'],
+    props:['products','categories','filter', 'message'],
      data() {
         return {
             form: this.$inertia.form({
@@ -194,7 +206,15 @@ export default {
                filterPriceMin: this.$props.filter.filterPriceMin,
                filterPriceMax: this.$props.filter.filterPriceMax,
                filterCategory: this.$props.filter.filterCategory,
+            }),
+            // formCard: this.form({
+            //     productId: 'holaa',
+            // })
+          
+            formp: useForm({
+                productId: null,
             })
+
         }
     },
     methods: {
@@ -202,6 +222,13 @@ export default {
             this.form.get(this.route('productsClient.index'), 
                  this.form
             )
+        },
+        submitCard() {
+            //console.log(this.productId)
+            this.formp.post(this.route('cart.store'), 
+                 this.formp
+            )
+            //this.$inertia.post(this.route('cart.store'),this.formp);
         }
     },
  

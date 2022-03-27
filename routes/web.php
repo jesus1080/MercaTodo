@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
@@ -39,6 +40,11 @@ Route::group(['middleware' => ['role:admin']], function () {
         'except' => ['show']])->middleware(['auth', 'verified']);
 });
 require __DIR__.'/auth.php';
+
+Route::post('/cart', [CartController::class, 'store'])
+      ->name('cart.store')->middleware((['auth','verified']));
+
+
 
 
 
