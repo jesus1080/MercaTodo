@@ -4,12 +4,12 @@
     <BreezeAuthenticatedLayout>
         <template #header>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Lista De Productos
+                    Carrito De Compras
                 </h2>
         </template>
             <div>
                 <h2 class="text-gray-600 font-semibold">Accion</h2>
-                <span class="text-xs">En el boton Editar podrá modificar cada uno de los clientes</span>
+                <span class="text-xs">Bienvenido a su carrito de compras</span>
             </div>
             <div class="flex items-center justify-between">
                 <div class="flex bg-gray-50 items-center p-2 rounded-md">
@@ -22,9 +22,11 @@
                     <input class="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search...">
             </div>
                     <div class="lg:ml-40 ml-10 space-x-8">
-                        <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Report</button>
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            <a :href="route('products.create')" type="button">Crear Producto </a>
+                             <a :href="route('productsClient.index')" type="button">Seguir Comprando</a>
+                        </button>
+                        <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                            <a :href="route('cart-content.index')" type="button">Realizar Compra</a>
                         </button>
                     </div>
                 </div>
@@ -41,24 +43,16 @@
                                         Precio
                                     </th>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Stock
+                                        Cantidad
                                     </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Estado
-                                    </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Imagen
-                                    </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Descripcion 
-                                    </th>
+
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Accion
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(product,index) in products.data" :key="index">
+                                <tr v-for="(product,index) in cartContent" :key="index">
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="flex items-center">
                                                 <div class="ml-3">
@@ -81,46 +75,14 @@
                                         <div class="flex items-center">
                                                 <div class="ml-3">
                                                     <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{product.stock}}
+                                                        {{product.qty}}
                                                     </p>
                                                 </div>
                                         </div>
                                     </td>
-                                   
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" v-if="product.status">
-                                        <span
-                                            class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span aria-hidden
-                                                class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                            <span class="relative">Activo</span>
-                                        </span>
-                                    </td>
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" v-if="!product.status">
-                                        <span
-                                            class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                            <span aria-hidden
-                                                class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                            <span class="relative">Inactivo</span>
-                                        </span>
-                                    </td>
-                                   <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                <span type="hidden">
-                                                    <img v-bind:src=" product.image " class="img-responsive object-cover h-20 w-20 ..." >
-                                                </span>
-                                    </td>
-                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <div class="flex items-center">
-                                                <div class="ml-3">
-                                                    <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{product.description}}
-                                                    </p>
-                                                </div>
-                                        </div>
-                                    </td>
-                                  
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">
-                                            <a :href="route('products.edit', product.id )" class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Editar</a>
+                                              <Link @click="destroy(product.rowId)" class="text-red-700">Quitar</Link>
                                         </p>
                                     </td>
 
@@ -128,36 +90,31 @@
                                 </tr>
                                 <div>
                                     <br>
-                                    {{info}}
+                                    
                                 </div>
                             </tbody>
-                        </table>
-                        <pagination class="mt-6 flex justify-center" :links="products.links" />
-      
-        <!--seccion products -->
-         <!-- tailwind.config.js -->
-
-
-
-
-<!-- component -->
-
-
- <!--endseccion products -->
+    </table>
+    
     </BreezeAuthenticatedLayout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import { Head } from '@inertiajs/inertia-vue3';
+import { Head, Link } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination';
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Head,
+        Link,
         Pagination,
     },
-    props:['products','info']
+    props:['cartContent','info'],
+    methods:{
+        destroy(id) {
+            this.$inertia.delete(route("cart.destroy", id));
+        },
+    }
 }
 </script>
