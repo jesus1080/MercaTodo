@@ -1,13 +1,13 @@
 <template>
     <div>
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="md:flex">
             <input type="hidden" v-model="form.productId">
             <div class="flex ">
-                <div class="flex w-8/12">
+                <div class="flex w-5 ">
                     <input min="1" v-model="form.quantity"
                     class="bg-white text-sm text-gray-900 text-center focus:outline-none border border-gray-800 focus:border-gray-600 rounded-l-md w-full">
                 </div>
-                <div class="flex flex-col w-4/12">
+                <div class="flex flex-col w-7 ">
                     <input value="+" v-on:click="increment" type="button" style="cursor:pointer;"
                     class="text-white text-center text-md font-semibold rounded-tr-md px-1 bg-gray-800 focus:bg-gray-600 focus:outline-none border border-gray-800 focus:border-gray-600">
                    

@@ -31,11 +31,12 @@
                     Merca Todo
                 </div>
                 <div class="flex items-center justify-end w-full">
-                    <button @click="cartOpen = !cartOpen" class="text-gray-600 focus:outline-none mx-4 sm:mx-0">
+                    
+                    <a  :href="route('cart-content.index')" class="text-gray-600 focus:outline-none mx-4 sm:mx-0">
                         <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
-                    </button>
+                    </a>({{countCart}})
 
                     <div class="flex sm:hidden">
                         <button @click="isOpen = !isOpen" type="button" class="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
@@ -110,7 +111,7 @@
             <h3 class="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
             <span class="mt-3 text-sm text-gray-500">200+ Products</span>
             <div>
-                <h1>{{$page.props.message}}</h1>
+                <h1>{{info}}</h1>
             </div>
 
       <div class=" grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6" >
@@ -198,8 +199,9 @@ export default {
         BreezeButton,
         Formp,
     },
-    props:['products','categories','filter', 'message'],
-     data() {
+    props:['products','categories','filter', 'info','countCart'],
+    
+    data() {
         return {
             form: this.$inertia.form({
                filterName: this.$props.filter.filterName,
