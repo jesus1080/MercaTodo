@@ -94,6 +94,11 @@
                                 </div>
                             </tbody>
     </table>
+     <div class="lg:ml-40 ml-10 space-x-8">
+                        <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                             <a :href="route('cart.destroy.content')" type="button">Vaciar Carrito</a>
+                        </button>
+    </div>
     
     </BreezeAuthenticatedLayout>
 </template>
@@ -113,7 +118,13 @@ export default {
     props:['cartContent','info'],
     methods:{
         destroy(id) {
-            this.$inertia.delete(route("cart.destroy", id));
+              
+            this.$inertia.delete(route("cart.destroy", id),);
+          
+            Toast.fire({
+                                icon: 'success',
+                                title: 'Carrito vacio'
+                                });
         },
     }
 }

@@ -12,7 +12,6 @@ class CartController extends Controller
 {
     public function index()
     {
-
         $cartContent = Cart::content();
         return Inertia::render('Cart/CartIndex',compact('cartContent'));
     }
@@ -27,18 +26,12 @@ class CartController extends Controller
             $request->input('quantity'),
             $product->price,
         );
-
-        //dd(Cart::content());
-        
-
-        //return redirect()->route('productsClient.index')->with('info', 'Producto agregado al carrito de compras');
         return Redirect::route('productsClient.index')->with('info', 'Producto agregado al carrito de compras');
 
     }
 
     public function destroy($rowId)
     {
-        //dd($rowId);
         $item = Cart::get($rowId);
         if($item->qty==1){
             Cart::remove($rowId);
@@ -48,5 +41,11 @@ class CartController extends Controller
             return Redirect::route('cart-content.index');
         }
        
+    }
+
+    public function destroycart()
+    {
+        Cart::destroy();
+        return Redirect::route('cart-content.index');
     }
 }

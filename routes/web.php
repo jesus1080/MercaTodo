@@ -46,6 +46,8 @@ Route::post('/cart', [CartController::class, 'store'])
 Route::get('/cart-content', [CartController::class, 'index'])
       ->name('cart-content.index')->middleware((['auth','verified']));
 Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::get('/cart-content-desroy', [CartController::class, 'destroycart'])
+      ->name('cart.destroy.content');
 
 
 
