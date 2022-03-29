@@ -53,14 +53,6 @@ class ProductController extends Controller
         return Redirect::route('products.index')->with('info',$message);
     }
 
-    
-    public function show(Request $request):Response
-    {
-        $products = Product::name($request->input('name'))->where("status","=",true)->paginate(3);
-        return Inertia::render('Product/ProductsShow',compact('products'));
-    }
-
-  
     public function edit(Product $product): Response
     {
         return Inertia::render('Product/EditProduct',['product'=>$product]);

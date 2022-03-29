@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ClientController;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,13 +30,8 @@ Route::get('/', function () {
     ]);
 });
 
-// Route::get('/dashboard', function () {
-//     //$products = Product::paginate(5);
-//     $products = Product::where("status","=",true)->paginate(5);
-//     return Inertia::render('Dashboard',compact('products'));
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/products2', [ProductController::class, 'show'])->name('products.show')->middleware((['auth','verified']));
+Route::get('/products-client', [ClientController::class, 'index'])->name('productsClient.index')->middleware((['auth','verified']));
+Route::get('/products-show/{id}', [ClientController::class, 'show'])->name('productsClient.show')->middleware((['auth','verified']));
 
 
 Route::group(['middleware' => ['role:admin']], function () {
@@ -43,6 +40,15 @@ Route::group(['middleware' => ['role:admin']], function () {
         'except' => ['show']])->middleware(['auth', 'verified']);
 });
 require __DIR__.'/auth.php';
+
+Route::post('/cart', [CartController::class, 'store'])
+      ->name('cart.store')->middleware((['auth','verified']));
+Route::get('/cart-content', [CartController::class, 'index'])
+      ->name('cart-content.index')->middleware((['auth','verified']));
+Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::get('/cart-content-desroy', [CartController::class, 'destroycart'])
+      ->name('cart.destroy.content');
+
 
 
 

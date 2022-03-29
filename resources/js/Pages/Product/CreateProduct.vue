@@ -70,7 +70,7 @@
                 </div>
                 <div class="flex justify-center">
                 <div class="mb-3 w-96">
-                <label for="formFile" class="form-label inline-block mb-2 text-gray-700">Suba su la imagen de producto</label>
+                <label for="formFile" class="form-label inline-block mb-2 text-gray-700">Suba la imagen de producto</label>
                 <input class="form-control
                     block
                     w-full
