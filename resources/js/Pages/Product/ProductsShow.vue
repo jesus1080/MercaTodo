@@ -8,14 +8,6 @@
             </h2>
         </template>
 
-      
-        <!--seccion products -->
-         <!-- tailwind.config.js -->
-
-
-
-
-<!-- component -->
 
 <div x-data="{ cartOpen: false , isOpen: false }" class="bg-white">
     <header>
@@ -33,10 +25,11 @@
                 <div class="flex items-center justify-end w-full">
                     
                     <a  :href="route('cart-content.index')" class="text-gray-600 focus:outline-none mx-4 sm:mx-0">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="h-7 w-7" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
-                    </a>({{countCart}})
+                    </a>(<div class="text-red-500"> {{countCart}}
+                        </div>)
 
                     <div class="flex sm:hidden">
                         <button @click="isOpen = !isOpen" type="button" class="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
@@ -47,11 +40,12 @@
                     </div>
                 </div>
             </div>
-            <div class="relative mt-6 max-w-lg mx-auto">
+            <div class="mt-16">
                 <!-- search -->
                 <form  @submit.prevent="submit">
-                     <BreezeValidationErrors class="mb-4" /> 
+                     <!-- <BreezeValidationErrors class="mb-4" />  -->
                     <div class="md:flex space-x-4">
+                        <h1>Categoria:</h1>
                         <div class="flex justify-center">
                             <div class="mb-3 xl:w-96">
                                 <select class="form-select appearance-none
@@ -69,8 +63,8 @@
                                 ease-in-out
                                 m-0
                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="filterCategory" v-model="form.filterCategory">
-                                    <option selected>Categoria</option>
-                                    <option  v-for="(category,index) in categories" :key="index" :value='category.id'>{{category.name}}</option>
+                                   
+                                <option  v-for="(category,index) in categories" :key="index" :value='category.id'>{{category.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -120,14 +114,6 @@
                              
                     <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                         <div class="flex items-end justify-end h-56 w-full bg-cover" :style="{backgroundImage:'url('+product.image+')' }">
-                            <!-- <form @submit.prevent="submitCard">
-                                
-                                    <input type="hidden" id="productId" :value="product.id">
-                                
-                                <button type="submit" class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                </button>
-                            </form> -->
                             <formp :product="product"/>
                         </div>
                         <a :href="route('productsClient.show', product.id)">     
@@ -209,9 +195,6 @@ export default {
                filterPriceMax: this.$props.filter.filterPriceMax,
                filterCategory: this.$props.filter.filterCategory,
             }),
-            // formCard: this.form({
-            //     productId: 'holaa',
-            // })
           
             formp: useForm({
                 productId: null,

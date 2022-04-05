@@ -5,20 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Inertia\Response;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index():Response
     {
-
         $cartContent = Cart::content();
-        return Inertia::render('Cart/CartIndex',compact('cartContent'));
+        $cartTotal = Cart::subtotal();
+        
+        return Inertia::render('Cart/CartIndex',compact('cartContent','cartTotal'));
     }
     
     
-    public function store(Request $request)
+    public function store(Request $request):RedirectResponse
     {
         $product = Product::findOrfail($request->input('productId'));
         $card = Cart::add(
@@ -27,18 +30,12 @@ class CartController extends Controller
             $request->input('quantity'),
             $product->price,
         );
-
-        //dd(Cart::content());
-        
-
-        //return redirect()->route('productsClient.index')->with('info', 'Producto agregado al carrito de compras');
         return Redirect::route('productsClient.index')->with('info', 'Producto agregado al carrito de compras');
 
     }
 
-    public function destroy($rowId)
+    public function destroy($rowId):RedirectResponse
     {
-        //dd($rowId);
         $item = Cart::get($rowId);
         if($item->qty==1){
             Cart::remove($rowId);
@@ -48,5 +45,11 @@ class CartController extends Controller
             return Redirect::route('cart-content.index');
         }
        
+    }
+
+    public function destroycart():RedirectResponse
+    {
+        Cart::destroy();
+        return Redirect::route('cart-content.index');
     }
 }

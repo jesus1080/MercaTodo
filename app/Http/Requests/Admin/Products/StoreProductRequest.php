@@ -20,6 +20,7 @@ class StoreProductRequest extends FormRequest
             'description' => 'required|string|min:10|max:255',
             'stock' => 'required|integer',
             'image' => 'image|max:1200|required',
+            //'category_id' => ['required', 'numeric', 'exists:categories,id'],
         ];
     }
 
@@ -32,7 +33,8 @@ class StoreProductRequest extends FormRequest
             'stock.required' => 'La cantidad del producto es un valor requerido',
             'description.required' => 'La descripcion es un valor requerido',
             'image.required' => 'Debe incluir una imagen para el producto',
-            'image.image' => 'La imagen debe ser de tipo jpg, png, jpeg' 
+            'image.image' => 'La imagen debe ser de tipo jpg, png, jpeg',
+            //'category_id.required' => 'El producto debe tener una categoria', 
         ];
      }
 }

@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Admin\Products\StoreProductRequest;
 use App\Http\Requests\Admin\Products\UpdateProductRequest;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -31,7 +32,8 @@ class ProductController extends Controller
   
     public function create():Response
     {
-        return Inertia::render('Product/CreateProduct');
+        $categories = Category::all();
+        return Inertia::render('Product/CreateProduct', compact('categories'));
     }
 
     public function store(StoreProductRequest $request): RedirectResponse
@@ -45,8 +47,9 @@ class ProductController extends Controller
             'image' => 'public/storage/products_images/'.$imageName,
             'description' => $request->description,
             'stock' => $request->stock,
+            'category_id' => (int)$request->categoryId,
         ]);
-        
+    
         event(new Registered($product));
         $image->storeAS('public/products_images',$imageName);
         $message = "Se creo el producto correctamente";
@@ -55,7 +58,8 @@ class ProductController extends Controller
 
     public function edit(Product $product): Response
     {
-        return Inertia::render('Product/EditProduct',['product'=>$product]);
+        $categories = Category::all();
+        return Inertia::render('Product/EditProduct',['product'=>$product,'categories'=>$categories]);
     }
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
@@ -67,6 +71,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'description' => $request->description,
             'status' => $request->status,
+            'category_id' => $request->categoryId,
 
         ]);
 

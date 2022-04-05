@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Invoice\InvoiceController;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -41,12 +42,18 @@ Route::group(['middleware' => ['role:admin']], function () {
 });
 require __DIR__.'/auth.php';
 
+//cart 
 Route::post('/cart', [CartController::class, 'store'])
       ->name('cart.store')->middleware((['auth','verified']));
 Route::get('/cart-content', [CartController::class, 'index'])
       ->name('cart-content.index')->middleware((['auth','verified']));
 Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::get('/cart-content-desroy', [CartController::class, 'destroycart'])
+      ->name('cart.destroy.content');
 
+//webchedout
+
+Route::resource('webcheckout',InvoiceController::class);
 
 
 
