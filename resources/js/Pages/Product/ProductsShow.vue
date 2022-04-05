@@ -64,7 +64,7 @@
                                 m-0
                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="filterCategory" v-model="form.filterCategory">
                                    
-                                    <option  v-for="(category,index) in categories" :key="index" :value='category.id'>{{category.name}}</option>
+                                <option  v-for="(category,index) in categories" :key="index" :value='category.id'>{{category.name}}</option>
                                 </select>
                             </div>
                         </div>

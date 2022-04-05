@@ -17,7 +17,7 @@
                             clip-rule="evenodd" />
                     </svg>
                     <input class="bg-gray-50 outline-none ml-1 block " type="text" name="" id="" placeholder="search..."> -->
-            </div>
+                </div>
                     <div class="lg:ml-40 ml-10 space-x-8">
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
                              <a :href="route('productsClient.index')" type="button">Seguir Comprando</a>
@@ -25,8 +25,8 @@
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
                             <a :href="route('webcheckout.store')" type="button">Realizar Compra</a>
                         </button>
-                    </div>
                 </div>
+            </div>
             
        
     
@@ -63,7 +63,7 @@
                                         <div class="flex items-center">
                                                 <div class="ml-3">
                                                     <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{product.price}}
+                                                        ${{product.price}}
                                                     </p>
                                                 </div>
                                         </div>
@@ -95,6 +95,11 @@
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
                              <a :href="route('cart.destroy.content')" @click="empty()" type="button">Vaciar Carrito</a>
                         </button>
+                         <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                Total: ${{cartTotal}}
+                            </p>
+                        </div>
     </div>
     
     </BreezeAuthenticatedLayout>
@@ -112,7 +117,7 @@ export default {
         Link,
         Pagination,
     },
-    props:['cartContent','info'],
+    props:['cartContent','info', 'cartTotal'],
     methods:{
         destroy(id) {
               

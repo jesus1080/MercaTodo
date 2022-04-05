@@ -15,7 +15,9 @@ class CartController extends Controller
     public function index():Response
     {
         $cartContent = Cart::content();
-        return Inertia::render('Cart/CartIndex',compact('cartContent'));
+        $cartTotal = Cart::subtotal();
+        
+        return Inertia::render('Cart/CartIndex',compact('cartContent','cartTotal'));
     }
     
     

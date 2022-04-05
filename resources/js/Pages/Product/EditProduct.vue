@@ -94,6 +94,29 @@
                         </div>
                  </div>
                 </div>
+                 <h1>Categoria:</h1>
+                        <div class="flex justify-center">
+                            <div class="mb-3 xl:w-96">
+                                <select class="form-select appearance-none
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding bg-no-repeat
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="categoryId" v-model="form.categoryId">
+                                   
+                                <option  v-for="(category,index) in categories" :key="index" :value='category.id'>{{category.name}}</option>
+                            </select>
+                    </div>
+                </div>
                 </div>
                 <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="submit"> 
                     Editar
@@ -128,7 +151,7 @@ export default {
         Link,
         useForm,
     },
-    props:['product'],
+    props:['product','categories'],
 
     data(){
         return{ 
@@ -139,6 +162,7 @@ export default {
                 stock: this.$props.product.stock,
                 description: this.$props.product.description,
                 status: this.$props.product.status!=0 ? true:false,
+                categoryId: this.$props.product.category_id,
                 image: null,
                 terms: false,
 

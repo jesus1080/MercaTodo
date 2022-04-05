@@ -16,10 +16,11 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
         $cartContent = Cart::content()->toArray();
+        $products = $this->getProductCart($cartContent);
         //dd($cartContent->toArray());
+        Cart::destroy();
         $sessionData = $this->getSessionData($cartContent);
         $session = (new WebcheckoutService())->createSession($sessionData);
-        $products = $this->getProductCart($cartContent);
         if('OK'===$session->status->status){
             $invoice = Invoice::create([
                 'total' => $sessionData['payment']['amount']['total'],
@@ -27,6 +28,7 @@ class InvoiceController extends Controller
             ]);
             $invoice->save();
             return redirect()->away($session->processUrl);
+            
         }
         return redirect()->route('cart-content.index');
     }
