@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Invoice;
 
-
 use App\Http\Controllers\Controller;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Services\WebcheckoutService;
 use App\Models\Invoice;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class InvoiceController extends Controller
 {
@@ -21,21 +21,24 @@ class InvoiceController extends Controller
         Cart::destroy();
         $sessionData = $this->getSessionData($cartContent);
         $session = (new WebcheckoutService())->createSession($sessionData);
-        if('OK'===$session->status->status){
+        //dd($session);
+        if ('OK'===$session->status->status) {
             $invoice = Invoice::create([
                 'total' => $sessionData['payment']['amount']['total'],
                 'payment_status'=> 'PENDING',
+                'url'=>$session->processUrl,
+                'session_id'=>$session->requestId,
             ]);
             $invoice->save();
             return redirect()->away($session->processUrl);
-            
         }
         return redirect()->route('cart-content.index');
     }
 
-    private function getProductCart(array $data){
+    private function getProductCart(array $data)
+    {
         $products = array();
-        foreach($data as $element){
+        foreach ($data as $element) {
             $products[$element['id']]=[
                 'quantity' => $element['qty'],
                 'price' => $element['price'],
@@ -49,7 +52,7 @@ class InvoiceController extends Controller
     {
         $description='';
         $total = 0;
-        foreach($data as $element){
+        foreach ($data as $element) {
             $description = $description.'----'.'name:'.$element['name'].' cuantity:'.$element['qty'].' price:'.$element['price'];
             $total += $element['subtotal'];
         }
@@ -64,9 +67,16 @@ class InvoiceController extends Controller
                 'description' => $description,
                 'amount' => $amount
             ],
-            'returnUrl' => 'http://127.0.0.1:8000/products-client',
-            'expiration' => date('c',strtotime('+2 days')),
+            //'returnUrl' => 'http://127.0.0.1:8000/products-client',
+            'returnUrl' => route('webcheckout.invoices'),
+            'expiration' => date('c', strtotime('+10 minutes')),
 
         ];
+    }
+
+    public function indexInvoices(): Response
+    {
+        $invoices = Invoice::paginate();
+        return Inertia::render('Invoice/Invoices', compact('invoices'));
     }
 }

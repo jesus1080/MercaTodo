@@ -17,6 +17,8 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->decimal('total',10,2);
             $table->string('payment_status',20);
+            $table->string('url');
+            $table->integer('session_id');
             $table->timestamps();
         });
     }

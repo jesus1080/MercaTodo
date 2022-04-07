@@ -18,19 +18,18 @@ use App\Models\Category;
 
 class ProductController extends Controller
 {
-    public function index(Request $request):Response
+    public function index(Request $request): Response
     {
         $products = Product::paginate(4);
-        if(Arr::has($request->session()->all(),'info')){
+        if (Arr::has($request->session()->all(), 'info')) {
             $info = $request->session()->all()['info'];
-            return Inertia::render('Product/Products',compact('products','info'));
-        }else{
-            return Inertia::render('Product/Products',compact('products'));
+            return Inertia::render('Product/Products', compact('products', 'info'));
+        } else {
+            return Inertia::render('Product/Products', compact('products'));
         }
-        
     }
-  
-    public function create():Response
+
+    public function create(): Response
     {
         $categories = Category::all();
         return Inertia::render('Product/CreateProduct', compact('categories'));
@@ -40,7 +39,7 @@ class ProductController extends Controller
     {
         $image = $request->image;
         $imageName = (string)Str::uuid().'.'.$image->getClientOriginalExtension();
-       
+
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
@@ -49,21 +48,21 @@ class ProductController extends Controller
             'stock' => $request->stock,
             'category_id' => (int)$request->categoryId,
         ]);
-    
+
         event(new Registered($product));
-        $image->storeAS('public/products_images',$imageName);
+        $image->storeAS('public/products_images', $imageName);
         $message = "Se creo el producto correctamente";
-        return Redirect::route('products.index')->with('info',$message);
+        return Redirect::route('products.index')->with('info', $message);
     }
 
     public function edit(Product $product): Response
     {
         $categories = Category::all();
-        return Inertia::render('Product/EditProduct',['product'=>$product,'categories'=>$categories]);
+        return Inertia::render('Product/EditProduct', ['product'=>$product,'categories'=>$categories]);
     }
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
-    {   
+    {
         $product->update([
 
             'name' => $request->name,
@@ -75,20 +74,18 @@ class ProductController extends Controller
 
         ]);
 
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             Storage::delete('public/products_images/'.$product->getImageName());
-            $image = $request->image;  
+            $image = $request->image;
             $imageName = (string)Str::uuid().'.'.$image->getClientOriginalExtension();
-            $image->storeAS('public/products_images',$imageName);
+            $image->storeAS('public/products_images', $imageName);
             $product->update([
                 'image' => 'public/storage/products_images/'.$imageName,
             ]);
-            
         }
         return Redirect::route('products.index');
     }
-    
+
     public function destroy($id)
     {
         //

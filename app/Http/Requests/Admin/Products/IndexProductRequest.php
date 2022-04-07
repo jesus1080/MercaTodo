@@ -22,14 +22,13 @@ class IndexProductRequest extends FormRequest
             'filterPriceMax' => 'bail|nullable|min:3|max:80',
             'filterCategory' => 'bail|nullable|exists:categories,id',
         ];
-        
     }
 
     public function messages(): array
-      {
+    {
         return [
             'filterName.min' => 'Ve! pone minimo 3 caracteres',
-           
+
         ];
-     }
+    }
 }

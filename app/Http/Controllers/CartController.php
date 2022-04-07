@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Redirect;
 
 class CartController extends Controller
 {
-    public function index():Response
+    public function index(): Response
     {
         $cartContent = Cart::content();
         $cartTotal = Cart::subtotal();
-        
-        return Inertia::render('Cart/CartIndex',compact('cartContent','cartTotal'));
+
+        return Inertia::render('Cart/CartIndex', compact('cartContent', 'cartTotal'));
     }
-    
-    
-    public function store(Request $request):RedirectResponse
+
+
+    public function store(Request $request): RedirectResponse
     {
         $product = Product::findOrfail($request->input('productId'));
         $card = Cart::add(
@@ -31,23 +31,21 @@ class CartController extends Controller
             $product->price,
         );
         return Redirect::route('productsClient.index')->with('info', 'Producto agregado al carrito de compras');
-
     }
 
-    public function destroy($rowId):RedirectResponse
+    public function destroy($rowId): RedirectResponse
     {
         $item = Cart::get($rowId);
-        if($item->qty==1){
+        if ($item->qty==1) {
             Cart::remove($rowId);
             return Redirect::route('cart-content.index');
-        }else{
+        } else {
             $item->qty= $item->qty - 1;
             return Redirect::route('cart-content.index');
         }
-       
     }
 
-    public function destroycart():RedirectResponse
+    public function destroycart(): RedirectResponse
     {
         Cart::destroy();
         return Redirect::route('cart-content.index');

@@ -11,7 +11,8 @@ class Invoice extends Model
 
     protected $fillable = [
         'total',
-        'reference',
         'payment_status',
+        'url',
+        'session_id',
     ];
 }

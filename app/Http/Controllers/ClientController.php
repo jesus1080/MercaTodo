@@ -12,7 +12,7 @@ use App\Models\Category;
 
 class ClientController extends Controller
 {
-    public function index(IndexProductRequest $request):Response
+    public function index(IndexProductRequest $request): Response
     {
         $filter = [
             'filterName' => $request->input('filterName'),
@@ -28,12 +28,12 @@ class ClientController extends Controller
                                 ->priceMax($request->input('filterPriceMax'))
                                 ->category($request->input('filterCategory'))
                                 ->with(['category:id,name'])
-                                ->where("status","=",true)
+                                ->where("status", "=", true)
                                 ->paginate(8)->appends($request->only($filter));
-        if($filter===null){
-            return Inertia::render('Product/ProductsShow',compact('products','categories'));
+        if ($filter===null) {
+            return Inertia::render('Product/ProductsShow', compact('products', 'categories'));
         }
-        return Inertia::render('Product/ProductsShow',compact('products','categories','filter','countCart'));
+        return Inertia::render('Product/ProductsShow', compact('products', 'categories', 'filter', 'countCart'));
     }
 
     public function show(int $id): Response

@@ -52,8 +52,8 @@ Route::get('/cart-content-desroy', [CartController::class, 'destroycart'])
       ->name('cart.destroy.content');
 
 //webchedout
-
-Route::resource('webcheckout',InvoiceController::class);
+Route::get('webcheckout', [InvoiceController::class, 'index'])->name('webcheckout.store');
+Route::get('/invoices', [InvoiceController::class, 'indexInvoices'])->name('webcheckout.invoices');
 
 
 

@@ -25,7 +25,7 @@ class StoreProductRequest extends FormRequest
     }
 
     public function messages(): array
-      {
+    {
         return [
             'name.required' => 'El nombre es un valor requerido',
             'min' => 'El valor minimo para el campo :attribute debes ser :min',
@@ -34,7 +34,7 @@ class StoreProductRequest extends FormRequest
             'description.required' => 'La descripcion es un valor requerido',
             'image.required' => 'Debe incluir una imagen para el producto',
             'image.image' => 'La imagen debe ser de tipo jpg, png, jpeg',
-            //'category_id.required' => 'El producto debe tener una categoria', 
+            //'category_id.required' => 'El producto debe tener una categoria',
         ];
-     }
+    }
 }
