@@ -21,8 +21,7 @@ class ShowProductTest extends TestCase
         $user = User::factory()->create()->assignRole('client');
         $this->actingAs($user);
         $product = Product::factory()->create();
-        $response = $this->get(route('productsClient.show',$product->id));
+        $response = $this->get(route('productsClient.show', $product->id));
         $response->assertStatus(200);
     }
-
 }

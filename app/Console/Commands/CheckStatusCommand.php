@@ -8,7 +8,6 @@ use App\Jobs\CheckStatusJob;
 
 class CheckStatusCommand extends Command
 {
-   
     /**
      * The name and signature of the console command.
      *
@@ -21,7 +20,7 @@ class CheckStatusCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Check status of the invoice';
+    protected $description = 'Check status invoice';
 
     /**
      * Create a new command instance.

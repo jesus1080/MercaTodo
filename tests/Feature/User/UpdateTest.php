@@ -22,53 +22,55 @@ class UpdateTest extends TestCase
         $response->assertStatus(302);
     }
     /** @test */
-    public function testUserClientAutenticatedCanNotUpdatedUser(){
+    public function testUserClientAutenticatedCanNotUpdatedUser()
+    {
         Role::create(['name' => 'client']);
         $user = User::factory()->create()->assignRole('client');
         $user2 = User::factory()->create()->assignRole('client');
         $this->actingAs($user);
         $response = $this->get(route('users.edit', [$user2]));
         $response->assertStatus(403);
-        
     }
     /** @test */
-    public function testUserAdminAutenticatedCanSeeViewEditUser(){
+    public function testUserAdminAutenticatedCanSeeViewEditUser()
+    {
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'client']);
         $user = User::factory()->create()->assignRole('admin');
         $this->actingAs($user);
         $user2 = User::factory()->create()->assignRole('client');
         $response = $this->get(route('users.edit', [$user2]));
-        $response->assertInertia(fn (Assert $page) => $page
+        $response->assertInertia(
+            fn (Assert $page) => $page
               ->component('User/EditUser')
-              ->has('user', fn(Assert $page)=> $page
+              ->has(
+                  'user',
+                  fn (Assert $page) => $page
                 ->where('first_name', $user2->first_name)
                 ->etc()
-              
               )
         );
-     
     }
     /** @test */
-    public function testUserAdminAutenticatedCanUpdateUser(){
+    public function testUserAdminAutenticatedCanUpdateUser()
+    {
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'client']);
         $user = User::factory()->create()->assignRole('admin');
         $user2 = User::factory()->create()->assignRole('client');
         $this->actingAs($user);
-        $response = $this->put(route('users.update',$user2),[
+        $response = $this->put(route('users.update', $user2), [
             'first_name' => 'simon',
             'last_name' => 'luna',
             'phone' => '2333333',
-            'active' => '0', 
-        ],[
+            'active' => '0',
+        ], [
             'first_name',
             'last_name',
             'phone',
-            'active', 
+            'active',
         ]);
         $dbUser = User::where('id', $user2->id)->first();
         $this->assertEquals($dbUser['first_name'], 'simon');
     }
-    
 }

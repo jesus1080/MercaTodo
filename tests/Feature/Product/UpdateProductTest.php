@@ -18,15 +18,15 @@ class UpdateProductTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-     /** @test */
-    public function testUserClientCanNotUpdateProduct():void
+    /** @test */
+    public function testUserClientCanNotUpdateProduct(): void
     {
-         Role::create(['name' => 'client']);
-         $user = User::factory()->create()->assignRole('client');
-         $this->actingAs($user);
-         $product = Product::factory()->create();
-         $response = $this->get(route('products.edit', compact('product')));
-         $response->assertStatus(403);
+        Role::create(['name' => 'client']);
+        $user = User::factory()->create()->assignRole('client');
+        $this->actingAs($user);
+        $product = Product::factory()->create();
+        $response = $this->get(route('products.edit', compact('product')));
+        $response->assertStatus(403);
     }
 
 
@@ -37,7 +37,7 @@ class UpdateProductTest extends TestCase
         $this->actingAs($user);
         $product = Product::factory()->create();
         $data = $this->productData();
-        $response = $this->put(route('products.update',$product),$data,[
+        $response = $this->put(route('products.update', $product), $data, [
             'name',
             'price',
             'description',
@@ -45,8 +45,8 @@ class UpdateProductTest extends TestCase
             'stock',
             'status',
         ]);
-        $this->assertDatabaseCount('products',1);
-        $this->assertDatabaseHas('products',Arr::except($data,['image']));
+        $this->assertDatabaseCount('products', 1);
+        $this->assertDatabaseHas('products', Arr::except($data, ['image']));
         $response->assertRedirect(route('products.index'));
     }
 
@@ -61,5 +61,4 @@ class UpdateProductTest extends TestCase
             'status' => true,
         ];
     }
-
 }

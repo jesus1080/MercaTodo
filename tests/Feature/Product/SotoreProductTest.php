@@ -48,7 +48,7 @@ class StoreProductTest extends TestCase
         $response = $this->post(route('products.store'), $data);
         $response->assertRedirect(route('products.index'));
         $this->assertDatabaseCount('products', 1);
-        $this->assertDatabaseHas('products',Arr::except($data, ['image']));
+        $this->assertDatabaseHas('products', Arr::except($data, ['image']));
     }
 
     /**
@@ -64,7 +64,6 @@ class StoreProductTest extends TestCase
         $this->actingAs($user);
         $response = $this->post(route('products.store'), $data);
         $response->assertSessionHasErrors($field);
-
     }
 
     private function productData(): array
@@ -89,7 +88,7 @@ class StoreProductTest extends TestCase
                 ),
                 'field' => 'name'
             ],
-            
+
             'validate rule name required' => [
                     'data' => array_replace(
                         $this->productData(),

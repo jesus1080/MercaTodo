@@ -19,12 +19,13 @@
                                     Dashboard
                                 </BreezeNavLink>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.user.roles[0].name=='admin'">
+                                
                                 <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Usuarios
                                 </BreezeNavLink>
                             </div>
-                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.user.roles[0].name=='admin'">
                                 <BreezeNavLink :href="route('products.index')" :active="route().current('products.index')">
                                     Productos
                                 </BreezeNavLink>

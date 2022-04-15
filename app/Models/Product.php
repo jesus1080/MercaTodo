@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Ramsey\Uuid\Type\Integer;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -19,7 +20,7 @@ class Product extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 
+        'name',
         'price',
         'image',
         'description',
@@ -30,6 +31,10 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+    public function invoice(): BelongsToMany
+    {
+        return $this->belongsToMany(Invoice::class);
     }
     public function getImageAttribute(): string
     {
@@ -43,7 +48,7 @@ class Product extends Model
         return $path[3];
     }
 
-    public function scopeName(Builder $query, ? string $name): Builder
+    public function scopeName(Builder $query, ?string $name): Builder
     {
         if (null !== $name) {
             return $this->searchByField($query, 'name', "%$name%", 'like');
@@ -51,34 +56,30 @@ class Product extends Model
 
         return $query;
     }
-    public function scopePriceMin(Builder $query, ? string $price): Builder
+    public function scopePriceMin(Builder $query, ?string $price): Builder
     {
         if (null !== $price) {
-            return $query->where('price','<',$price);
+            return $query->where('price', '<', $price);
         }
 
         return $query;
     }
-    public function scopePriceMax(Builder $query, ? string $price): Builder
+    public function scopePriceMax(Builder $query, ?string $price): Builder
     {
         if (null !== $price) {
-            return $query->where('price','>',$price);
+            return $query->where('price', '>', $price);
         }
 
         return $query;
     }
     public function scopeCategory($query, $category_id): Builder
     {
-         
-        //dd($category_id);
-        return $query->when($category_id, function($query) use ($category_id) { $query->where('category_id', $category_id);});
-        
+        return $query->when($category_id, function ($query) use ($category_id) {
+            $query->where('category_id', $category_id);
+        });
     }
     private function searchByField(Builder $query, string $field, string $value, string $operator = null): Builder
     {
         return $query->where($field, $operator, $value);
     }
-    
-
-
 }

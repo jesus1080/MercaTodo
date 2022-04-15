@@ -10,7 +10,7 @@ use GuzzleHttp\Client;
 class WebcheckoutService implements WebcheckoutContract
 {
     public Client $client;
-    
+
     public function __construct()
     {
         $this->client = new Client();
@@ -23,11 +23,10 @@ class WebcheckoutService implements WebcheckoutContract
         $data = $getInformation->auth();
         $url = $getInformation::url($session_id);
 
-        return $this->request($data,$url);
+        return $this->request($data, $url);
     }
     public function createSession(array $data)
     {
-        
         $createSessionRequest = new CreateSessionRequest($data);
         //dd($createSessionRequest);
         $data = $createSessionRequest->toArray();
@@ -35,13 +34,13 @@ class WebcheckoutService implements WebcheckoutContract
         $url = $createSessionRequest::url(null);
         //dd($url);
         //dd($this->request($data,$url));
-        return $this->request($data,$url);
+        return $this->request($data, $url);
     }
     private function request(array $data, string $url)
     {
         //dd($url);
         //dd($this->client);
-        $response = $this->client->request('post',$url,[
+        $response = $this->client->request('post', $url, [
             'json' => $data,
             'verify' => true,
         ]);

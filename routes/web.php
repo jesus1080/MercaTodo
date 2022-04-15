@@ -22,7 +22,6 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -31,32 +30,30 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/products-client', [ClientController::class, 'index'])->name('productsClient.index')->middleware((['auth','verified']));
-Route::get('/products-show/{id}', [ClientController::class, 'show'])->name('productsClient.show')->middleware((['auth','verified']));
+Route::get('/products-client', [ClientController::class, 'index'])->name('productsClient.index')->middleware((['auth','verified','role:client|admin']));
+Route::get('/products-show/{id}', [ClientController::class, 'show'])->name('productsClient.show')->middleware((['auth','verified','role:client|admin']));
 
 
 Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
-    Route::resource('products', ProductController::class,[
+    Route::resource('products', ProductController::class, [
         'except' => ['show']])->middleware(['auth', 'verified']);
 });
+
+Route::group(['middleware' => ['role:admin|client']], function () {
+    //cart
+    Route::post('/cart', [CartController::class, 'store'])
+        ->name('cart.store')->middleware((['auth','verified']));
+    Route::get('/cart-content', [CartController::class, 'index'])
+        ->name('cart-content.index')->middleware((['auth','verified']));
+    Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::get('/cart-content-desroy', [CartController::class, 'destroycart'])
+        ->name('cart.destroy.content');
+
+    //invoices
+    Route::post('webcheckout', [InvoiceController::class, 'store'])->name('webcheckout.store');
+    Route::get('/invoices', [InvoiceController::class, 'indexInvoices'])->name('webcheckout.invoices');
+    Route::get('/invoice-show{id}',[InvoiceController::class, 'show'])->name('webchekout.show');
+});
+
 require __DIR__.'/auth.php';
-
-//cart 
-Route::post('/cart', [CartController::class, 'store'])
-      ->name('cart.store')->middleware((['auth','verified']));
-Route::get('/cart-content', [CartController::class, 'index'])
-      ->name('cart-content.index')->middleware((['auth','verified']));
-Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
-Route::get('/cart-content-desroy', [CartController::class, 'destroycart'])
-      ->name('cart.destroy.content');
-
-//webchedout
-Route::get('webcheckout', [InvoiceController::class, 'index'])->name('webcheckout.store');
-Route::get('/invoices', [InvoiceController::class, 'indexInvoices'])->name('webcheckout.invoices');
-
-
-
-
-
-

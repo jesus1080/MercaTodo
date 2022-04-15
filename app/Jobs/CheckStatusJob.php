@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Jobs;
+
 use App\Actions\CheckStatusAction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -12,7 +13,10 @@ use App\Models\Invoice;
 
 class CheckStatusJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new job instance.
@@ -33,7 +37,7 @@ class CheckStatusJob implements ShouldQueue
     {
         $invoices = Invoice::where('payment_status', '=', 'PENDING')->get();
 
-        foreach($invoices as $invoice){
+        foreach ($invoices as $invoice) {
             $actions->handle($invoice);
         }
         return 0;

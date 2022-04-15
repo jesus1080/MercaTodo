@@ -24,13 +24,17 @@ class CartController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $product = Product::findOrfail($request->input('productId'));
-        $card = Cart::add(
-            $product->id,
-            $product->name,
-            $request->input('quantity'),
-            $product->price,
-        );
-        return Redirect::route('productsClient.index')->with('info', 'Producto agregado al carrito de compras');
+
+        if($product->stock > 1 && $product->stock >  $request->input('quantity')){
+            $card = Cart::add(
+                $product->id,
+                $product->name,
+                $request->input('quantity'),
+                $product->price,
+            );
+        }
+        
+        return Redirect::route('productsClient.index');
     }
 
     public function destroy($rowId): RedirectResponse

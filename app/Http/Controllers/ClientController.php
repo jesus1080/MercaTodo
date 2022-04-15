@@ -21,7 +21,6 @@ class ClientController extends Controller
             'filterCategory' => $request->input('filterCategory'),
         ];
         $categories = Category::all();
-        //dd($request->input('filterCategory'));
         $countCart = Cart::count();
         $products = Product::name($request->input('filterName'))
                                 ->priceMin($request->input('filterPriceMin'))
@@ -31,7 +30,7 @@ class ClientController extends Controller
                                 ->where("status", "=", true)
                                 ->paginate(8)->appends($request->only($filter));
         if ($filter===null) {
-            return Inertia::render('Product/ProductsShow', compact('products', 'categories'));
+            return Inertia::render('Product/ProductsShow', compact('products', 'categories', 'countCart'));
         }
         return Inertia::render('Product/ProductsShow', compact('products', 'categories', 'filter', 'countCart'));
     }

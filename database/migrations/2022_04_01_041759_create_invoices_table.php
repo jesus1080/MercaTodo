@@ -15,10 +15,15 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total',10,2);
-            $table->string('payment_status',20);
+            $table->decimal('total', 10, 2);
+            $table->string('payment_status', 20);
             $table->string('url');
             $table->integer('session_id');
+            $table->foreignId('client_id');
+            $table->foreign('client_id')
+                  ->references('id')
+                  ->on('users');
+            
             $table->timestamps();
         });
     }

@@ -22,8 +22,8 @@
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
                              <a :href="route('productsClient.index')" type="button">Seguir Comprando</a>
                         </button>
-                        <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            <a :href="route('webcheckout.store')" type="button">Realizar Compra</a>
+                        <button @click="checkout()" class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                            Comprar
                         </button>
                 </div>
             </div>
@@ -134,6 +134,18 @@ export default {
                         icon: 'success',
                         title: 'Carrito Vacio'
                         });
+        },
+        checkout(){
+            axios.post(route("webcheckout.store")).then((response)=>{
+                window.location.href=response.data.proccessUrl
+                
+            }).catch((exception)=>{
+                
+                Toast.fire({
+                            icon: 'error',
+                            title: 'Ocurrio un error al procesar el pago'
+                            });
+            })
         }
     }
 }
