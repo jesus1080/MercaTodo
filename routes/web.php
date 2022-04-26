@@ -49,6 +49,8 @@ Route::group(['middleware' => ['role:admin|client']], function () {
     Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::get('/cart-content-desroy', [CartController::class, 'destroycart'])
         ->name('cart.destroy.content');
+    Route::put('/cart-update/{id}', [CartController::class, 'update'])
+        ->name('cart.update');
 
     //invoices
     Route::post('webcheckout', [InvoiceController::class, 'store'])->name('webcheckout.store');

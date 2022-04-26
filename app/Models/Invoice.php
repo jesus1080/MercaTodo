@@ -26,7 +26,7 @@ class Invoice extends Model
 
     public function products():BelongsToMany
     {
-        //return $this->belongsToMany(Product::class)->whitPivot('quantity','subtotal','price');
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot('quantity','price','subtotal');
+        //return $this->belongsToMany(Product::class);
     }
 }

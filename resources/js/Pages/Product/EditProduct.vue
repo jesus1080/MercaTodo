@@ -172,7 +172,6 @@ export default {
 
     methods: {
         submit(){
-            console.log("cualquier cosa");
             this.form.post(this.route('products.update', this.$props.product), {
                 
                 image: this.$props.product.image,

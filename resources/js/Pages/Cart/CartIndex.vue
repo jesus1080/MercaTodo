@@ -91,7 +91,7 @@
                                 </div>
                             </tbody>
     </table>
-     <div class="lg:ml-40 ml-10 space-x-8">
+    <div class="lg:ml-40 ml-10 space-x-8">
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
                              <a :href="route('cart.destroy.content')" @click="empty()" type="button">Vaciar Carrito</a>
                         </button>

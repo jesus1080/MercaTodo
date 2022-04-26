@@ -114,8 +114,10 @@
                              
                     <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                         <div class="flex items-end justify-end h-56 w-full bg-cover" :style="{backgroundImage:'url('+product.image+')' }">
+                            
                             <formp :product="product"/>
                         </div>
+                        
                         <a :href="route('productsClient.show', product.id)">     
                         <div class="px-5 py-3">
                             <h3 class="text-gray-700 uppercase">{{product.name}}</h3>
@@ -125,7 +127,7 @@
                         </div>
                          </a> 
                     </div>
-                
+  
                 
             </div>
             </div>
