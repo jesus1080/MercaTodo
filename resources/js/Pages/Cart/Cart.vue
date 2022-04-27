@@ -15,7 +15,7 @@
               <th class="px-6 py-3 font-bold whitespace-nowrap">Producto</th>
               <th class="px-6 py-3 font-bold whitespace-nowrap">Cantidad</th>
               <th class="px-6 py-3 font-bold whitespace-nowrap">Precio</th>
-              <th class="px-6 py-3 font-bold whitespace-nowrap">Eliminar</th>
+              <th class="px-6 py-3 font-bold whitespace-nowrap">Quitar</th>
             </tr>
           </thead>
           <tbody >

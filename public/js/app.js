@@ -22049,7 +22049,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "px-6 py-3 font-bold whitespace-nowrap"
 }, "Precio"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "class": "px-6 py-3 font-bold whitespace-nowrap"
-}, "Eliminar")])], -1
+}, "Quitar")])], -1
 /* HOISTED */
 );
 
