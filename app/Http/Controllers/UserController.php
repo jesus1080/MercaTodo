@@ -76,8 +76,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        //dd($user);
-        //dd($request);
         $user->update($request->all());
         return Redirect::route('users.index');
     }
