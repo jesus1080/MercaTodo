@@ -14,7 +14,8 @@ class UpdateProductRequest extends FormRequest
 
     public function rules(): array
     {
-        return[
+        return [
+
             'name' => 'required|string|max:255',
             'price' => 'required|between:0,9999999',
             'description' => 'required|string|max:255',
@@ -29,7 +30,7 @@ class UpdateProductRequest extends FormRequest
         'name.required' => 'El nombre es un valor requerido',
         'min' => 'El valor minimo para el campo :attribute debes ser :min',
         'price.required' => 'El precio es un valor requerido',
-        'stock.required' => 'La cantidad del producto es un valor requerido',
+        'stock.required' => 'La cantidad del producto es un valor requerido para actualizar',
         'description.required' => 'La descripcion es un valor requerido',
         'image.image' => 'La imagen debe ser de tipo jpg, png, jpeg'
         ];
