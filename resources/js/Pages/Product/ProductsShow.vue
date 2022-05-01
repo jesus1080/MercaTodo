@@ -179,6 +179,7 @@ import BreezeButton from '@/Components/Button.vue'
 import { reactive } from 'vue'
 import Formp from '../../Components/Formp';
 
+
 export default {
     components: {
         BreezeAuthenticatedLayout,
@@ -219,6 +220,8 @@ export default {
             //this.$inertia.post(this.route('cart.store'),this.formp);
         }
     },
+    
  
 }
+
 </script>

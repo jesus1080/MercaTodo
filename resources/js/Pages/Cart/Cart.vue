@@ -196,7 +196,7 @@ export default {
             })
         },
         increment(id,quantity){
-                this.form.quantity = quantity+1;
+                this.form.quantity = quantity + 1;
                 this.form.put(route("cart.update",id))
             },
         decrement(id,quantity){
