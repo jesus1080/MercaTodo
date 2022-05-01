@@ -58,4 +58,9 @@ Route::group(['middleware' => ['role:admin|client']], function () {
     Route::get('/invoice-show{id}',[InvoiceController::class, 'show'])->name('webchekout.show');
 });
 
+//import-export
+
+Route::post('products/import', [ProductController::class, 'import'])->name('products.import');
+Route::get('products/export', [ProductController::class, 'export'])->name('products.export');
+
 require __DIR__.'/auth.php';

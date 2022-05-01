@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProductsExport;
 use App\Models\Product;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Redirect;
@@ -14,7 +15,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Admin\Products\StoreProductRequest;
 use App\Http\Requests\Admin\Products\UpdateProductRequest;
+use App\Imports\ProductsImport;
 use App\Models\Category;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -89,5 +92,22 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function import(Request $request): RedirectResponse
+    {
+        $file = $request->file;
+        
+        Excel::import(new ProductsImport(), $file);
+
+        return Redirect::route('products.index');
+    }
+
+    public function export()
+    {
+        //dd(new ProductsExport);
+        return Excel::download(new ProductsExport, 'products.xlsx');
+
+        
     }
 }
