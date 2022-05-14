@@ -97,17 +97,17 @@ class ProductController extends Controller
     public function import(Request $request): RedirectResponse
     {
         $file = $request->file;
-        
-        Excel::import(new ProductsImport(), $file);
+        $fileName = (string)Str::uuid().'.'.$file->getClientOriginalExtension();
+        $file->storeAS('public/files',$fileName);
+
+        Excel::queueImport(new ProductsImport, $file);
 
         return Redirect::route('products.index');
     }
 
     public function export()
     {
-        //dd(new ProductsExport);
         return Excel::download(new ProductsExport, 'products.xlsx');
 
-        
     }
 }

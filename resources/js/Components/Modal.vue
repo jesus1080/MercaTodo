@@ -97,6 +97,10 @@ export default{
           
         )
         this.$emit('clicke',false);
+        Toast.fire({
+              icon: 'success',
+                title: 'Procesando informacion'
+              });
       },
       clicke(){
         this.$emit('clicke',false);

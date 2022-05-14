@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Invoice\InvoiceController;
+use App\Http\Controllers\Report\ReportController;
+use App\Models\Invoice;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,13 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
     Route::resource('products', ProductController::class, [
         'except' => ['show']])->middleware(['auth', 'verified']);
+    //import-export-report
+
+    Route::post('products/import', [ProductController::class, 'import'])->name('products.import');
+    Route::get('products/export', [ProductController::class, 'export'])->name('products.export');
+    Route::get('products/report', [ReportController::class, 'index'])->name('products.report');
+    Route::get('/products/generate',[ReportController::class,'generate'])->name('generate');
+    
 });
 
 Route::group(['middleware' => ['role:admin|client']], function () {
@@ -58,9 +67,12 @@ Route::group(['middleware' => ['role:admin|client']], function () {
     Route::get('/invoice-show{id}',[InvoiceController::class, 'show'])->name('webchekout.show');
 });
 
-//import-export
 
-Route::post('products/import', [ProductController::class, 'import'])->name('products.import');
-Route::get('products/export', [ProductController::class, 'export'])->name('products.export');
+Route::get('/pdf',function (){
+    $invoices = Invoice::all();
+    return view('reports.invoice',compact('invoices'));
+});
+
+
 
 require __DIR__.'/auth.php';

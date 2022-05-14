@@ -7,16 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
 
-class ProductsImport implements ToModel, WithHeadingRow
+class ProductsImport implements ToModel, WithHeadingRow, ShouldQueue, WithChunkReading
 {
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-    public function model(array $row)
+    public function model(array $row): Product
     {
         return new Product([
             'name' => Arr::get($row, 'name'),
@@ -28,4 +29,11 @@ class ProductsImport implements ToModel, WithHeadingRow
             'category_id' => Arr::get($row, 'category_id'),
         ]);
     }
+
+    public function chunkSize(): int
+    {
+        return 1000;
+    }
+
+   
 }
