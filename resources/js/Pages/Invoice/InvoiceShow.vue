@@ -62,16 +62,16 @@
        <thead>
         <tr>
          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-normal text-slate-700 sm:pl-6 md:pl-0">
-          Description
+          Descripcion
          </th>
          <th scope="col" class="hidden py-3.5 px-3 text-right text-sm font-normal text-slate-700 sm:table-cell">
-          Quantity
+          Cantidad
          </th>
          <th scope="col" class="hidden py-3.5 px-3 text-right text-sm font-normal text-slate-700 sm:table-cell">
-          Rate
+          Precio c/u
          </th>
          <th scope="col" class="py-3.5 pl-3 pr-4 text-right text-sm font-normal text-slate-700 sm:pr-6 md:pr-0">
-          Amount
+          Precio
          </th>
         </tr>
        </thead>
@@ -90,10 +90,10 @@
           {{product.pivot.quantity}}
          </td>
          <td class="hidden px-3 py-4 text-sm text-right text-slate-500 sm:table-cell">
-          $0.00
+          ${{product.price}}
          </td>
          <td class="py-4 pl-3 pr-4 text-sm text-right text-slate-500 sm:pr-6 md:pr-0">
-          $0.00
+          ${{product.price*product.pivot.quantity}}
          </td>
         </tr>
 
@@ -170,6 +170,24 @@
   </article>
  </div>
 </section>
+
+<div class="fixed inset-x-0 z-20 lg:inset-x-auto bottom-6 lg:right-8 xl:right-10 xl:bottom-8">
+    <div class="lg:w-72 px-6 lg:px-0">
+        <div class="p-2 bg-blue-600 rounded-lg shadow-lg sm:p-3">
+            <div class="flex flex-wrap items-center justify-between">
+                <a href="javascript:window.print()" class="flex items-center flex-1 w-0">
+                    <span class="flex p-2 bg-blue-800 rounded-lg">
+                        <svg class="h-6 w-6 text-white" viewBox="0 0 24 24" src="http://127.0.0.1:8000/storage/logo/print.svg"></svg>
+                        <img src="http://127.0.0.1:8000/storage/logo/print.svg" alt="">
+                    </span>
+                    <p class="ml-3 font-medium tracking-wide text-white truncate">
+                        Imprimir factura 
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 </BreezeAuthenticatedLayout>
 </template>
 

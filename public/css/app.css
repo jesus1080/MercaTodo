@@ -756,6 +756,9 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
+.mt-5 {
+  margin-top: 1.25rem;
+}
 .-mb-4 {
   margin-bottom: -1rem;
 }
@@ -1379,6 +1382,9 @@ select {
 .p-10 {
   padding: 2.5rem;
 }
+.p-5 {
+  padding: 1.25rem;
+}
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1398,6 +1404,10 @@ select {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
 }
 .py-3 {
   padding-top: 0.75rem;
@@ -1430,10 +1440,6 @@ select {
 .py-2\.5 {
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
-}
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
 }
 .py-20 {
   padding-top: 5rem;
@@ -1863,6 +1869,10 @@ select {
 }
 .hover\:bg-\[\#F7BE38\]\/90:hover {
   background-color: rgb(247 190 56 / 0.9);
+}
+.hover\:bg-black:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 .hover\:bg-indigo-500:hover {
   --tw-bg-opacity: 1;

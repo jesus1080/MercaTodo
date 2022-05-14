@@ -190,18 +190,19 @@ export default {
             }).catch((exception)=>{
                 
                 Toast.fire({
-                            icon: 'error',
-                            title: 'Ocurrio un error al procesar el pago'
-                            });
+                      icon: 'error',
+                      title: 'Ocurrio un error al procesar el pago'
+                      });
             })
         },
         increment(id,quantity){
-                this.form.quantity = quantity + 1;
+                
+                this.form.quantity = parseInt(quantity) + 1;
                 this.form.put(route("cart.update",id))
             },
         decrement(id,quantity){
                 if(quantity>1){
-                    this.form.quantity = quantity-1;
+                    this.form.quantity = parseInt(quantity)-1;
                     this.form.put(route("cart.update",id))
                 }
                 

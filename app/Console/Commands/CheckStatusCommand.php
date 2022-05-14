@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Invoice;
+
 use App\Jobs\CheckStatusJob;
 
 class CheckStatusCommand extends Command
@@ -41,5 +41,6 @@ class CheckStatusCommand extends Command
     {
         //dispatch_sync(new CheckStatusJob());
         CheckStatusJob::dispatch();
+       
     }
 }
