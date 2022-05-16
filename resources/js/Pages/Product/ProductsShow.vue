@@ -4,18 +4,10 @@
     <BreezeAuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                Detalle Producto
             </h2>
         </template>
 
-      
-        <!--seccion products -->
-         <!-- tailwind.config.js -->
-
-
-
-
-<!-- component -->
 
 <div x-data="{ cartOpen: false , isOpen: false }" class="bg-white">
     <header>
@@ -31,11 +23,13 @@
                     Merca Todo
                 </div>
                 <div class="flex items-center justify-end w-full">
-                    <button @click="cartOpen = !cartOpen" class="text-gray-600 focus:outline-none mx-4 sm:mx-0">
-                        <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    
+                    <a  :href="route('cart-content.index')" class="text-gray-600 focus:outline-none mx-4 sm:mx-0">
+                        <svg class="h-7 w-7" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                             <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
-                    </button>
+                    </a>(<div class="text-red-500"> {{countCart}}
+                        </div>)
 
                     <div class="flex sm:hidden">
                         <button @click="isOpen = !isOpen" type="button" class="text-gray-600 hover:text-gray-500 focus:outline-none focus:text-gray-500" aria-label="toggle menu">
@@ -46,14 +40,41 @@
                     </div>
                 </div>
             </div>
-            <div class="relative mt-6 max-w-lg mx-auto">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
-                    <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </span>
-                <form @submit.prevent="submit">
-                     <input class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" type="text" placeholder="Search" v-model="form.name">
+            <div class="mt-16">
+                <!-- search -->
+                <form  @submit.prevent="submit">
+                     <!-- <BreezeValidationErrors class="mb-4" />  -->
+                    <div class="md:flex space-x-4">
+                        <h1>Categoria:</h1>
+                        <div class="flex justify-center">
+                            <div class="mb-3 xl:w-96">
+                                <select class="form-select appearance-none
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding bg-no-repeat
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="filterCategory" v-model="form.filterCategory">
+                                   
+                                <option  v-for="(category,index) in categories" :key="index" :value='category.id'>{{category.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input id="filterName" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="nombre" v-model="form.filterName">
+                        <input id="filterPriceMin" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="precio menor a" v-model="form.filterPriceMin">
+                        <input id="filterPriceMax" class="w-48 border rounded-md pl-10 pr-4 py-2 focus:border-blue-500 focus:outline-none focus:shadow-outline" placeholder="precio mayor a" v-model="form.filterPriceMax">
+                        <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        Buscar
+                        </BreezeButton>
+                    </div>
                 </form>
             </div>
         </div>
@@ -83,24 +104,31 @@
         <div class="container mx-auto px-6">
             <h3 class="text-gray-700 text-2xl font-medium">Wrist Watch</h3>
             <span class="mt-3 text-sm text-gray-500">200+ Products</span>
+            <div>
+                <h1>{{info}}</h1>
+            </div>
 
       <div class=" grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6" >
             <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden" v-for="(product,index) in products.data" :key="index">
        
-                    
+                             
                     <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
                         <div class="flex items-end justify-end h-56 w-full bg-cover" :style="{backgroundImage:'url('+product.image+')' }">
-                            <button class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                <svg class="h-5 w-5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            </button>
+                            
+                            <formp :product="product"/>
                         </div>
+                        
+                        <a :href="route('productsClient.show', product.id)">     
                         <div class="px-5 py-3">
                             <h3 class="text-gray-700 uppercase">{{product.name}}</h3>
+                            <h3 class="text-gray-700 uppercase">{{product.category.name}}</h3>
+                            <h3 class="text-gray-700 uppercase">{{product.stock}}</h3>
                             <span class="text-gray-500 mt-2">${{product.price}}</span>
                         </div>
+                         </a> 
                     </div>
-                
   
+                
             </div>
             </div>
         </div>
@@ -117,58 +145,60 @@
         </div>
     </footer>
 </div>
-
-<div class="fixed inset-x-0 z-20 lg:inset-x-auto bottom-6 lg:right-8 xl:right-10 xl:bottom-8">
-    <div class="lg:w-72 px-6 lg:px-0">
-        <div class="p-2 bg-blue-600 rounded-lg shadow-lg sm:p-3">
-            <div class="flex flex-wrap items-center justify-between">
-                <a target="_blank" href="https://www.buymeacoffee.com/khatabwedaa" class="flex items-center flex-1 w-0">
-                    <span class="flex p-2 bg-blue-800 rounded-lg">
-                        <svg class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.12954 3.00772C5.48563 2.38457 6.14831 2 6.86603 2H17.134C17.8517 2 18.5144 2.38457 18.8704 3.00772L20.0133 5.00772C20.6612 6.14163 20.0618 7.51107 18.9235 7.89532C18.9276 7.97661 18.9269 8.0591 18.9209 8.14249L18.0638 20.1425C17.989 21.1891 17.1181 22 16.0689 22H7.9311C6.88182 22 6.01094 21.1891 5.93618 20.1425L5.07904 8.14249C5.07308 8.0591 5.07231 7.97661 5.07645 7.89531C3.93813 7.51105 3.33874 6.14162 3.98668 5.00772L5.12954 3.00772ZM7.07396 8L7.28824 11H16.7117L16.926 8H7.07396ZM7.71681 17L7.9311 20H16.0689L16.2831 17H7.71681ZM18.2768 6L17.134 4L6.86603 4L5.72317 6H18.2768Z" fill="currentColor"></path>
-                        </svg>
-
-                    </span>
-
-                    <p class="ml-3 font-medium tracking-wide text-white truncate">
-                        By me a coffee
-                    </p>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
          <!--endseccion products -->
     </BreezeAuthenticatedLayout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import { Head } from '@inertiajs/inertia-vue3';
-import Pagination from '../Components/Pagination';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
+import Pagination from '../../Components/Pagination';
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
+import BreezeButton from '@/Components/Button.vue'
+import { reactive } from 'vue'
+import Formp from '../../Components/Formp';
+
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Head,
+        BreezeValidationErrors,
         Pagination,
+        BreezeButton,
+        Formp,
     },
-    props:['products'],
-     data() {
+    props:['products','categories','filter', 'info','countCart'],
+    
+    data() {
         return {
             form: this.$inertia.form({
-               name: '',
-               
+               filterName: this.$props.filter.filterName,
+               filterPriceMin: this.$props.filter.filterPriceMin,
+               filterPriceMax: this.$props.filter.filterPriceMax,
+               filterCategory: this.$props.filter.filterCategory,
+            }),
+          
+            formp: useForm({
+                productId: null,
             })
+
         }
     },
     methods: {
         submit() {
-            this.form.get(this.route('products.show'), 
+            this.form.get(this.route('productsClient.index'), 
                  this.form
+            )
+        },
+        submitCard() {
+            this.formp.post(this.route('cart.store'), 
+                 this.formp
             )
         }
     },
+    
  
 }
+
 </script>

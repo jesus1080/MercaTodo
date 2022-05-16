@@ -70,7 +70,7 @@
                 </div>
                 <div class="flex justify-center">
                 <div class="mb-3 w-96">
-                <label for="formFile" class="form-label inline-block mb-2 text-gray-700">Default file input example</label>
+                <label for="formFile" class="form-label inline-block mb-2 text-gray-700">Suba la imagen de producto</label>
                 <input class="form-control
                     block
                     w-full
@@ -87,6 +87,29 @@
                     m-0
                     focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" id="image" name="image" @input="form.image = $event.target.files[0]">
                 </div>
+                </div>
+                     <h1>Categoria:</h1>
+                        <div class="flex justify-center">
+                            <div class="mb-3 xl:w-96">
+                                <select class="form-select appearance-none
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding bg-no-repeat
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="categoryId" v-model="form.categoryId">
+                                   
+                                <option  v-for="(category,index) in categories" :key="index" :value='category.id'>{{category.name}}</option>
+                            </select>
+                    </div>
                 </div>
                 <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Crear
@@ -119,7 +142,7 @@ export default {
         Head,
         Link,
     },
-
+    props : ['categories'],
     data() {
         return {
             form: this.$inertia.form({
@@ -128,6 +151,7 @@ export default {
                 stock: '',
                 description: '',
                 status: '',
+                categoryId: null,
                 image: null,
             })
         }

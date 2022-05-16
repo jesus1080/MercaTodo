@@ -16,11 +16,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index():Response
+    public function index(): Response
     {
         $users = User::all();
-        return Inertia::render('Users',['users' => $users]);
-
+        return Inertia::render('User/Users', ['users' => $users]);
     }
 
     /**
@@ -52,7 +51,6 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        
     }
 
     /**
@@ -64,9 +62,9 @@ class UserController extends Controller
     public function edit(User $user): Response
     {
         #$user = User::findOrFail($id);
-        
+
         #return Inertia::render('EditUser',['user' => $user]);
-        return Inertia::render('EditUser',['user'=>$user]);
+        return Inertia::render('User/EditUser', ['user'=>$user]);
     }
 
     /**
@@ -78,8 +76,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user): RedirectResponse
     {
-        //dd($user);
-        //dd($request);
         $user->update($request->all());
         return Redirect::route('users.index');
     }

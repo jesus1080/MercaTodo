@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Imports\ProductsImport;
+use App\Jobs\CheckStatusJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +18,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        //$schedule->command('command:checkstatus')->everyMinute();
+        $schedule->job((new CheckStatusJob()))->everyMinute();
+        $schedule->job((new ProductsImport()))->everyMinute();
     }
 
     /**

@@ -23,6 +23,7 @@
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
             <form @submit.prevent="submit">
                 <BreezeValidationErrors class="mb-4" />
+                
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                 Iformacion 
                 </h6>
@@ -93,8 +94,31 @@
                         </div>
                  </div>
                 </div>
+                 <h1>Categoria:</h1>
+                        <div class="flex justify-center">
+                            <div class="mb-3 xl:w-96">
+                                <select class="form-select appearance-none
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding bg-no-repeat
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" id="categoryId" v-model="form.categoryId">
+                                   
+                                <option  v-for="(category,index) in categories" :key="index" :value='category.id'>{{category.name}}</option>
+                            </select>
+                    </div>
                 </div>
-                <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="submit" :class="{'opacity-25': form.processing}">
+                </div>
+                <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150" type="submit"> 
                     Editar
                 </button>
             </form>
@@ -125,31 +149,35 @@ export default {
         BreezeValidationErrors,
         Head,
         Link,
+        useForm,
     },
-    props:['product'],
-    data() {
-        return {
-            form: this.$inertia.form({
+    props:['product','categories'],
+
+    data(){
+        return{ 
+            form : useForm({
+                _method: 'put',
                 name: this.$props.product.name,
                 price: this.$props.product.price,
                 stock: this.$props.product.stock,
                 description: this.$props.product.description,
                 status: this.$props.product.status!=0 ? true:false,
+                categoryId: this.$props.product.category_id,
                 image: null,
                 terms: false,
+
             })
         }
     },
 
-
     methods: {
         submit(){
-           this.$inertia.post(this.route('products.update', this.$props.product),{
-                _method: 'put',
+            this.form.post(this.route('products.update', this.$props.product), {
+                
                 image: this.$props.product.image,
-                form: this.form,
             })
         }
+        
     }
 
    

@@ -4,13 +4,12 @@
     <BreezeAuthenticatedLayout>
         <template #header>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Lista De Productos
+                    Lista De Pagos
                 </h2>
         </template>
-            <div>
-                <h2 class="text-gray-600 font-semibold">Accion</h2>
-                <span class="text-xs">En el boton Editar podrá modificar cada uno de los clientes</span>
-            </div>
+            
+    <div class="bg-white p-8 rounded-md w-full">
+        <div class=" flex items-center justify-between pb-6">
             <div class="flex items-center justify-between">
                 <div class="flex bg-gray-50 items-center p-2 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
@@ -23,47 +22,44 @@
             </div>
                     <div class="lg:ml-40 ml-10 space-x-8">
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Report</button>
-                        <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            <a :href="route('products.create')" type="button">Crear Producto </a>
-                        </button>
                     </div>
                 </div>
-            
-       
+            </div>
+            <div>
+                <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                    <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
     
-  <table class="min-w-full leading-normal">
+                     <table class="min-w-full leading-normal">
                             <thead>
                                 <tr>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Nombre
-                                    </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Precio
-                                    </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Stock
+                                        Referencia
                                     </th>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Estado
                                     </th>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Imagen
+                                        Total
+                                    </th>
+                                    
+                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Fecha
                                     </th>
                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Descripcion 
+                                        Efectuar Pago
                                     </th>
-                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Accion
+                                     <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(product,index) in products.data" :key="index">
+                                <tr v-for="(invoice,index) in invoices.data" :key="index">
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="flex items-center">
                                                 <div class="ml-3">
                                                     <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{product.name}}
+                                                        {{invoice.session_id}}
                                                     </p>
                                                 </div>
                                         </div>
@@ -72,7 +68,7 @@
                                         <div class="flex items-center">
                                                 <div class="ml-3">
                                                     <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{product.price}}
+                                                        {{invoice.payment_status}}
                                                     </p>
                                                 </div>
                                         </div>
@@ -81,50 +77,35 @@
                                         <div class="flex items-center">
                                                 <div class="ml-3">
                                                     <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{product.stock}}
+                                                        {{invoice.total}}
                                                     </p>
                                                 </div>
                                         </div>
                                     </td>
-                                   
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" v-if="product.status">
-                                        <span
-                                            class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                            <span aria-hidden
-                                                class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                            <span class="relative">Activo</span>
-                                        </span>
-                                    </td>
-                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" v-if="!product.status">
-                                        <span
-                                            class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                            <span aria-hidden
-                                                class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                                            <span class="relative">Inactivo</span>
-                                        </span>
-                                    </td>
-                                   <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                <span type="hidden">
-                                                    <img v-bind:src=" product.image " class="img-responsive object-cover h-20 w-20 ..." >
-                                                </span>
+                                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <div class="flex items-center">
+                                                <div class="ml-3">
+                                                    <p class="text-gray-900 whitespace-no-wrap">
+                                                        {{invoice.created_at}}
+                                                    </p>
+                                                </div>
+                                        </div>
                                     </td>
                                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="flex items-center">
                                                 <div class="ml-3">
-                                                    <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{product.description}}
-                                                    </p>
+                                                    <p class="text-gray-900 whitespace-no-wrap"></p>
+                                                    <a :href="invoice.url" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">Pagar</a> 
                                                 </div>
                                         </div>
                                     </td>
-                                  
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                            <a :href="route('products.edit', product.id )" class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Editar</a>
-                                        </p>
+                                        <div class="flex items-center">
+                                                <div class="ml-3">
+                                                     <a :href="route('webchekout.show', invoice.id)" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Ver factura</a>
+                                                </div>
+                                        </div>
                                     </td>
-
-                                    
                                 </tr>
                                 <div>
                                     <br>
@@ -132,7 +113,11 @@
                                 </div>
                             </tbody>
                         </table>
-                        <pagination class="mt-6 flex justify-center" :links="products.links" />
+                    </div>
+                </div>
+            </div>
+        </div>
+                        
       
         <!--seccion products -->
          <!-- tailwind.config.js -->
@@ -143,14 +128,14 @@
 <!-- component -->
 
 
-         <!--endseccion products -->
+ <!--endseccion products -->
     </BreezeAuthenticatedLayout>
 </template>
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head } from '@inertiajs/inertia-vue3';
-import Pagination from '../Components/Pagination';
+import Pagination from '../../Components/Pagination';
 
 export default {
     components: {
@@ -158,6 +143,6 @@ export default {
         Head,
         Pagination,
     },
-    props:['products','info']
+    props:['invoices','info']
 }
 </script>

@@ -12,14 +12,15 @@ class IndexTest extends TestCase
 {
     use RefreshDatabase;
     /** @test */
-    public function aUserNotAutenticateCanNotListClients(){
+    public function aUserNotAutenticateCanNotListClients()
+    {
         $response = $this->get(route('users.index'));
         $response->assertRedirect(route('login'));
         $response->assertStatus(302);
-
     }
     /** @test */
-    public function testAUserClientAuthCanNotListUsers(){
+    public function testAUserClientAuthCanNotListUsers()
+    {
         Role::create(['name' => 'client']);
         $user = User::factory()->create()->assignRole('client');
         $this->actingAs($user);
@@ -27,7 +28,8 @@ class IndexTest extends TestCase
         $response->assertStatus(403);
     }
     /** @test */
-    public function testUserAdminAutenticatedCanListUsers(){
+    public function testUserAdminAutenticatedCanListUsers()
+    {
         Role::create(['name' => 'admin']);
         $user = User::factory()->create()->assignRole('admin');
         $this->actingAs($user);

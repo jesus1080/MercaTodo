@@ -8,25 +8,36 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('products.show')">
+                                <Link :href="route('productsClient.index')">
                                     <BreezeApplicationLogo class="block h-9 w-auto" />
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('products.show')" :active="route().current('products.show')">
+                                <BreezeNavLink :href="route('productsClient.index')" :active="route().current('productsClient.index')">
                                     Dashboard
                                 </BreezeNavLink>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.user.roles[0].name=='admin'">
+                                
                                 <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Usuarios
                                 </BreezeNavLink>
                             </div>
-                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.user.roles[0].name=='admin'">
                                 <BreezeNavLink :href="route('products.index')" :active="route().current('products.index')">
                                     Productos
+                                </BreezeNavLink>
+                            </div>
+                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <BreezeNavLink :href="route('webcheckout.invoices')" :active="route().current('webcheckout.invoices')">
+                                    Pagos
+                                </BreezeNavLink>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.user.roles[0].name=='admin'">
+                                <BreezeNavLink :href="route('products.report')" :active="route().current('products.report')">
+                                    Reportes
                                 </BreezeNavLink>
                             </div>
                         </div>
@@ -71,7 +82,7 @@
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink :href="route('products.show')" :active="route().current('products.show')">
+                        <BreezeResponsiveNavLink :href="route('productsClient.index')" :active="route().current('productsClient.index')">
                             Dashboard
                         </BreezeResponsiveNavLink>
                     </div>
