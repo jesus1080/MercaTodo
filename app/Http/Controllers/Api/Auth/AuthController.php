@@ -43,7 +43,6 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'ya esta registrado y autenticado'
         ]);
-
     }
 
     public function logout(Request $request): JsonResponse

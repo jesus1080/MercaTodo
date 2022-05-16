@@ -41,6 +41,5 @@ class CheckStatusCommand extends Command
     {
         //dispatch_sync(new CheckStatusJob());
         CheckStatusJob::dispatch();
-       
     }
 }

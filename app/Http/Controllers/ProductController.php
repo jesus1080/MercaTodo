@@ -46,7 +46,7 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
-            'image' => 'public/storage/products_images/'.$imageName,
+            'image' => $imageName,
             'description' => $request->description,
             'stock' => $request->stock,
             'category_id' => (int)$request->categoryId,
@@ -96,18 +96,20 @@ class ProductController extends Controller
 
     public function import(Request $request): RedirectResponse
     {
+        $this->validate($request, [
+            'file' => "required|mimes:xls,csv,xlsx,ods,txt"
+        ]);
         $file = $request->file;
         $fileName = (string)Str::uuid().'.'.$file->getClientOriginalExtension();
-        $file->storeAS('public/files',$fileName);
+        $file->storeAS('public/files', $fileName);
 
-        Excel::queueImport(new ProductsImport, $file);
+        Excel::queueImport(new ProductsImport(), $file);
 
         return Redirect::route('products.index');
     }
 
     public function export()
     {
-        return Excel::download(new ProductsExport, 'products.xlsx');
-
+        return Excel::download(new ProductsExport(), 'products.csv');
     }
 }

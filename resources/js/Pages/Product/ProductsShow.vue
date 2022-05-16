@@ -192,11 +192,9 @@ export default {
             )
         },
         submitCard() {
-            //console.log(this.productId)
             this.formp.post(this.route('cart.store'), 
                  this.formp
             )
-            //this.$inertia.post(this.route('cart.store'),this.formp);
         }
     },
     

@@ -12,13 +12,12 @@ use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
 {
-   
     public function authorize(): bool
     {
         return true;
     }
 
-  
+
     public function rules()
     {
         return [
@@ -28,5 +27,4 @@ class RegisterRequest extends FormRequest
             'password' => ['required', 'confirmed',Password::defaults()],
         ];
     }
-
 }

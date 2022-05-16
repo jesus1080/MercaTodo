@@ -20,6 +20,7 @@ class Product extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'price',
         'image',
@@ -39,13 +40,18 @@ class Product extends Model
     public function getImageAttribute(): string
     {
         $path = explode("public/", $this->attributes['image']);
-        return url('/'.$path[1]);
+        //dd(url('/storage/products_images/'.$this->getImageName()),$this->attributes['image']);
+        return url('/storage/products_images/'.$this->getImageName());
     }
 
     public function getImageName(): string
     {
         $path = explode("/", $this->attributes['image']);
-        return $path[3];
+        //dd($path);
+        if (count($path)>1) {
+            return $path[3];
+        }
+        return $path[0];
     }
 
     public function scopeName(Builder $query, ?string $name): Builder

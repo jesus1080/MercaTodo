@@ -19,17 +19,16 @@ class ImportJob implements ShouldQueue
     use SerializesModels;
 
     public $file;
-    
+
     public function __construct($file)
     {
         $this->file = $file;
     }
-    
-    
+
+
     public function handle()
     {
         Excel::import(new ProductsImport(), $this->file);
         Storage::delete($this->file);
-        
     }
 }

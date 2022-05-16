@@ -14,7 +14,6 @@ class IndexProductRequest extends FormRequest
 
     public function rules(): array
     {
-        //dd('hola');
         return[
 
             'filterName' => 'bail|nullable|min:3|max:80',

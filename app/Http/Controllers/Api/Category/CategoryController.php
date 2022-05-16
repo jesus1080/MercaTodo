@@ -33,11 +33,11 @@ class CategoryController extends Controller
 
     public function update(StoreCategoryRequest $request, Category $category): CategoryResource
     {
-       $category -> update([
+        $category -> update([
             'name' => $request->input('name')
-       ]); 
-       $category->save();
-       return new CategoryResource($category);
+       ]);
+        $category->save();
+        return new CategoryResource($category);
     }
 
     public function show(Category $category): CategoryResource

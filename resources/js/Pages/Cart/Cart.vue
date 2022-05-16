@@ -130,7 +130,7 @@
               "
             >
               <span class="text-xl font-bold">Total</span>
-              <span class="text-2xl font-bold">$37.50</span>
+              <span class="text-2xl font-bold">${{cartTotal}}</span>
             </div>
           </div>
         </div>

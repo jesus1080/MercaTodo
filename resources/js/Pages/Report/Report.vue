@@ -10,21 +10,22 @@
             
         <div>
              <form @submit.prevent="submit" action="generate" ref="form">
-                <div class="lg:ml-40 ml-10 space-x-8">
-                 <Datepicker name="param" v-model="date" range />
-                 <input type="hidden" name="start_date" :value="startDate">
-                 <input type="hidden" name="end_date" :value="endDate">
-                 <button type="submit" 
-                 class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">New Report</button>
-                </div>
+                
+                    <div class="bg-gray-50 h-50 m-20 p-6">
+                        <div class="h-5 p-2 m-1">
+                            <p>Seleccione la fecha inicial y final para generar el reporte:</p>
+                        </div>
+                        <div class="text-center h-20 p-10 m-5">
+                            <Datepicker v-model="date" range />
+                        </div>
+                        <input type="hidden" name="start_date" :value="startDate">
+                        <input type="hidden" name="end_date" :value="endDate">
+                        <div class="text-left h-20 p-10 m-5">
+                        <button type="submit" 
+                        class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Generar PDF</button>
+                        </div>
+                    </div>
              </form>
-             <!-- <form @submit.prevent="submit" action="generate" ref="form">
-                <div class="p-5">
-                    <label for="param">Enter your name:</label>
-                    <input type='text' name="param" class="px-2 ml-2 rounded-lg border">
-                    <button type="submit" class="px-2 py-1 ml-2 rounded-lg border bg-gray-500 text-white hover:bg-black">Generate PDF</button>
-                </div>
-            </form> -->
         </div>
 
     </BreezeAuthenticatedLayout>
@@ -37,10 +38,9 @@ import Pagination from '../../Components/Pagination';
 import { ref, onMounted, watch } from 'vue';
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
-    
-
 import 'vue-date-pick/dist/vueDatePick.css';
 import dayjs from 'dayjs';
+
 export default {
     components: {
         BreezeAuthenticatedLayout,
@@ -49,18 +49,14 @@ export default {
         Datepicker,
      
     },
-    
-    // props:['initialDate'],
     setup() {
         const date = ref([]);
         const startDate = ref(); 
         const endDate = ref();
 
-        // For demo purposes assign range from the current date
         onMounted(() => {
             const start = new Date();
             const end = new Date(new Date().setDate(start.getDate() + 7));
-            console.log(date)
             date.value = [start, end];
             
         });
@@ -76,21 +72,15 @@ export default {
         }
       
     },
-    // data(){
-    //     return{
-    //         form: this.$inertia.form({
-    //             date:''
-    //         })
-    //     }
-    // },
     methods:{
-        // submit(){
-        //     this.form.post(this.route('products.generate'),
-        //         this.form
-        //     )
-        // }
+
         submit: function(){
             this.$refs.form.submit()
+
+            Toast.fire({
+              icon: 'success',
+                title: 'Generando PDF'
+              });
         }
     }
 }

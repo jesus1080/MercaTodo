@@ -23,7 +23,7 @@ class CreateInvoicesTable extends Migration
             $table->foreign('client_id')
                   ->references('id')
                   ->on('users');
-            
+
             $table->timestamps();
         });
     }

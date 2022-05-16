@@ -17,8 +17,8 @@ class CreateInvoiceProductTable extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedInteger('quantity');
-            $table->decimal('price',10,2);
-            $table->decimal('subtotal',10,2);
+            $table->decimal('price', 10, 2);
+            $table->decimal('subtotal', 10, 2);
             $table->foreignId('invoice_id');
             $table->foreign('invoice_id')
                   ->references('id')

@@ -43,7 +43,6 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
-
         $product->name = $request->name;
         $product->stock = $request->stock;
         $product->price = $request->price;
@@ -52,13 +51,11 @@ class ProductController extends Controller
         $product->category_id = (int)$request->categoryId;
 
         if ($request->hasFile('image')) {
-
             Storage::delete('public/products_images/'.$product->getImageName());
             $image = $request->image;
             $imageName = (string)Str::uuid().'.'.$image->getClientOriginalExtension();
             $image->storeAS('public/products_images', $imageName);
             $product->image = 'public/storage/products_images/'.$imageName;
-            
         }
         $product->save();
         return response()->json([

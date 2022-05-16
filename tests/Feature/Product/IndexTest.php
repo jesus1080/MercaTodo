@@ -47,7 +47,7 @@ class IndexTest extends TestCase
         $user = User::factory()->create()->assignRole('admin');
         $this->actingAs($user);
         $products = Product::factory(10)->create();
-        $response = $this->get(route('products.store'));
+        $response = $this->get(route('products.index'));
         $response->assertInertia(
             fn (Assert $page) => $page
         ->component('Product/Products')

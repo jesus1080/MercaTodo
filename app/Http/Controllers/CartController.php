@@ -17,16 +17,16 @@ class CartController extends Controller
         $cartContent = Cart::content();
         $cartTotal = Cart::subtotal();
         $countCart = Cart::count();
-        return Inertia::render('Cart/Cart', compact('cartContent', 'cartTotal','countCart'));
+        return Inertia::render('Cart/Cart', compact('cartContent', 'cartTotal', 'countCart'));
     }
 
 
     public function store(Request $request): RedirectResponse
     {
         $product = Product::findOrfail($request->input('productId'));
-       
 
-        if($product->stock > 1 && $product->stock >  $request->input('quantity')){
+
+        if ($product->stock > 1 && $product->stock >  $request->input('quantity')) {
             $card = Cart::add(
                 $product->id,
                 $product->name,
@@ -36,7 +36,7 @@ class CartController extends Controller
                 ['image' => $product->image]
             );
         }
-        
+
         return Redirect::route('productsClient.index');
     }
 
@@ -57,8 +57,8 @@ class CartController extends Controller
         Cart::destroy();
         return Redirect::route('cart-content.index');
     }
-    
-    public function update(Request $request,String $rowId): RedirectResponse
+
+    public function update(Request $request, String $rowId): RedirectResponse
     {
         Cart::update($rowId, $request->quantity);
         return Redirect::route('cart-content.index');

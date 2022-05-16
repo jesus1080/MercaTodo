@@ -8,9 +8,10 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithUpsertColumns;
+use Maatwebsite\Excel\Concerns\WithUpserts;
 
-
-class ProductsImport implements ToModel, WithHeadingRow, ShouldQueue, WithChunkReading
+class ProductsImport implements ToModel, WithHeadingRow, ShouldQueue, WithChunkReading, WithUpserts, WithUpsertColumns
 {
     /**
     * @param array $row
@@ -20,6 +21,7 @@ class ProductsImport implements ToModel, WithHeadingRow, ShouldQueue, WithChunkR
     public function model(array $row): Product
     {
         return new Product([
+            'id' => Arr::get($row, 'id'),
             'name' => Arr::get($row, 'name'),
             'price' => Arr::get($row, 'price'),
             'image' => Arr::get($row, 'image'),
@@ -35,5 +37,13 @@ class ProductsImport implements ToModel, WithHeadingRow, ShouldQueue, WithChunkR
         return 1000;
     }
 
-   
+    public function uniqueBy(): array
+    {
+        return ['id'];
+    }
+
+    public function upsertColumns(): array
+    {
+        return['name','price','status','stock','category_id','description'];
+    }
 }

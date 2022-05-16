@@ -11,13 +11,12 @@ class CreateSessionAction
 {
     public function handle(array $cartContent, int $id): ?Invoice
     {
-       
         $sessionData = $this->getSessionData($cartContent);
 
         $session = (new WebcheckoutService())->createSession($sessionData);
         if (Statuses::OK===$session->status->status) {
             $products = $this->getProductCart($cartContent);
-           
+
             $invoice = Invoice::create([
                 'total' => $sessionData['payment']['amount']['total'],
                 'payment_status'=> Statuses::PENDING,
@@ -25,11 +24,10 @@ class CreateSessionAction
                 'session_id'=>$session->requestId,
                 'client_id'=> $id,
             ]);
-           
+
             $invoice->save();
-           
+
             $invoice->products()->attach($products);
-            
         }
         return $invoice ?? null;
     }

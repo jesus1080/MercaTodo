@@ -45,8 +45,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::post('products/import', [ProductController::class, 'import'])->name('products.import');
     Route::get('products/export', [ProductController::class, 'export'])->name('products.export');
     Route::get('products/report', [ReportController::class, 'index'])->name('products.report');
-    Route::get('/products/generate',[ReportController::class,'generate'])->name('generate');
-    
+    Route::get('/products/generate', [ReportController::class,'generate'])->name('generate');
 });
 
 Route::group(['middleware' => ['role:admin|client']], function () {
@@ -64,13 +63,13 @@ Route::group(['middleware' => ['role:admin|client']], function () {
     //invoices
     Route::post('webcheckout', [InvoiceController::class, 'store'])->name('webcheckout.store');
     Route::get('/invoices', [InvoiceController::class, 'indexInvoices'])->name('webcheckout.invoices');
-    Route::get('/invoice-show{id}',[InvoiceController::class, 'show'])->name('webchekout.show');
+    Route::get('/invoice-show{id}', [InvoiceController::class, 'show'])->name('webchekout.show');
 });
 
 
-Route::get('/pdf',function (){
+Route::get('/pdf', function () {
     $invoices = Invoice::all();
-    return view('reports.invoice',compact('invoices'));
+    return view('reports.invoice', compact('invoices'));
 });
 
 

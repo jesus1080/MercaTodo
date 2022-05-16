@@ -35,7 +35,7 @@
                                     Pagos
                                 </BreezeNavLink>
                             </div>
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" v-if="$page.props.auth.user.roles[0].name=='admin'">
                                 <BreezeNavLink :href="route('products.report')" :active="route().current('products.report')">
                                     Reportes
                                 </BreezeNavLink>
