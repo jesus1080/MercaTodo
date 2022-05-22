@@ -43,19 +43,13 @@ class ProductController extends Controller
         $image = $request->image;
         $imageName = (string)Str::uuid().'.'.$image->getClientOriginalExtension();
 
-        if(null == $request->categoryId){
-            $catId = 1;
-        }else{
-            $catId = $request->categoryId;
-        }
-
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'image' => $imageName,
             'description' => $request->description,
             'stock' => $request->stock,
-            'category_id' => (int)$catId,
+            'category_id' => (int)$request->categoryId,
         ]);
 
         event(new Registered($product));

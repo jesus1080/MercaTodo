@@ -20313,7 +20313,7 @@ __webpack_require__.r(__webpack_exports__);
         stock: '',
         description: '',
         status: '',
-        categoryId: null,
+        categoryId: 1,
         image: null
       })
     };
