@@ -151,7 +151,7 @@ export default {
                 stock: '',
                 description: '',
                 status: '',
-                categoryId: null,
+                categoryId: 1,
                 image: null,
             })
         }
