@@ -103,7 +103,7 @@ class ProductController extends Controller
         $fileName = (string)Str::uuid().'.'.$file->getClientOriginalExtension();
         $file->storeAS('public/files', $fileName);
 
-        Excel::queueImport(new ProductsImport(), $file);
+        Excel::import(new ProductsImport(), $file);
 
         return Redirect::route('products.index');
     }

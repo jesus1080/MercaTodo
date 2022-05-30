@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Http\Requests\Admin\Products\IndexProductRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Redirect;
 
 class ClientController extends Controller
 {
@@ -35,9 +36,14 @@ class ClientController extends Controller
         return Inertia::render('Product/ProductsShow', compact('products', 'categories', 'filter', 'countCart'));
     }
 
-    public function show(int $id): Response
+    public function show(int $id)
     {
         $product = Product::find($id);
-        return Inertia::render('Product/ProductShow', compact('product'));
+        if($product->status){
+            return Inertia::render('Product/ProductShow', compact('product'));
+        }else{
+            return Redirect::route('productsClient.index');
+        }
+        
     }
 }
